@@ -1,4 +1,4 @@
-class_name TimeEvent
+class_name TimeEvent2D
 extends Node
 
 var player_position: Vector2

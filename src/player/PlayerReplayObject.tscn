@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://c4t5wpbqmyqow"]
+
+[ext_resource type="PackedScene" uid="uid://bqvd8wnf3sxty" path="res://src/enemy/model.tscn" id="1_wwdb6"]
+
+[node name="PlayerReplayObject" type="Node3D"]
+
+[node name="human_male" parent="." instance=ExtResource("1_wwdb6")]
+transform = Transform3D(-0.14, 0, -1.22392e-08, 0, 0.14, 0, 1.22392e-08, 0, -0.14, 0, 0, 0)
+
+[node name="male" parent="human_male/Armature/Skeleton3D" index="0"]
+instance_shader_parameters/player = true
+
+[editable path="human_male"]

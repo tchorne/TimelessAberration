@@ -12,7 +12,12 @@ extends CharacterBody3D
 
 # Sword nodes
 
-@onready var sword_animation_player = $SwordPivot/AnimationPlayer
+@onready var sword_animation_player = $Neck/SwordPivot/AnimationPlayer
+@onready var enemy_attack_detector = $EnemyAttackDetector
+
+# TEMP time variables
+
+@onready var time_manager = $"../TimeManager"
 
 #Speed variables
 
@@ -61,6 +66,13 @@ var lerp_speed = 10.0
 
 var launch_momentum := Vector3.ZERO
 
+# Sword boost variables
+
+var sword_boost_speed_max = 7.0
+var sword_boost_speed = 0.0
+var sword_boost_decay = 15
+var sword_boost_direction := Vector3.FORWARD
+
 # Input variables 
 var direction := Vector3.ZERO
 var mouse_sens = 0.3
@@ -82,7 +94,18 @@ func _input(event):
 	
 func _physics_process(delta):
 	
+	calculate_movement(delta)
 	
+	if Input.is_action_just_pressed("primary"):
+		sword_animation_player.play("swing")
+		sword_boost_direction = -head.global_transform.basis.z.normalized()
+		sword_boost_speed = sword_boost_speed_max
+		velocity.y += (sword_boost_direction * sword_boost_speed).y * 0.2
+		if enemy_attack_detector.get_overlapping_bodies().size() > 0:
+			var e = enemy_attack_detector.get_overlapping_bodies()[0]
+			if e.get_parent().has_method("on_hit"):
+				e.get_parent().on_hit()
+		
 	move_and_slide()
 
 func calculate_movement(delta):
@@ -191,11 +214,17 @@ func calculate_movement(delta):
 			velocity.z = direction.z * (slide_timer+0.1) * slide_speed
 			
 	else:
-		velocity.x = move_toward(velocity.x, 0, current_speed)
-		velocity.z = move_toward(velocity.z, 0, current_speed)
+		velocity.x = 0
+		velocity.z = 0
 	
 	if not is_on_floor():
 		velocity.x *= 0.5
 		velocity.z *= 0.5
 	velocity += launch_momentum*1.5
+	
+	sword_boost_speed = move_toward(sword_boost_speed, 0, sword_boost_decay*delta)
+	velocity.x += (sword_boost_direction * sword_boost_speed).x
+	velocity.z += (sword_boost_direction * sword_boost_speed).z
+	
 	pass
+

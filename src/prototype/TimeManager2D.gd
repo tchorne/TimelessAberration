@@ -1,10 +1,10 @@
 extends Node
 
 ## Event order from player perspective 
-@export var event_list: Array[TimeEvent]
+@export var event_list: Array[TimeEvent2D]
 
 ## Event order fro game perspective
-@export var time_ordered: Array[TimeEvent]
+@export var time_ordered: Array[TimeEvent2D]
 
 @onready var player = $"../Player"
 
@@ -22,7 +22,7 @@ func _ready():
 			
 func next_event():
 	frames_since_event_start = 0
-	var next : TimeEvent = event_list[event_index]
+	var next : TimeEvent2D = event_list[event_index]
 	event_index += 1
 	player.global_position = next.player_position
 	

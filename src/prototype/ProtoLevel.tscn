@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://src/prototype/ProtoPlayer.gd" id="1_divqn"]
 [ext_resource type="Script" path="res://src/prototype/ProtoEnemy.gd" id="2_6ahbe"]
-[ext_resource type="Script" path="res://src/prototype/TimeEvent.gd" id="3_hqvfw"]
-[ext_resource type="Script" path="res://src/prototype/TimeManager.gd" id="3_nw4ll"]
-[ext_resource type="Script" path="res://src/prototype/ReplayController.gd" id="5_08djj"]
+[ext_resource type="Script" path="res://src/prototype/TimeEvent2D.gd" id="3_hqvfw"]
+[ext_resource type="Script" path="res://src/prototype/TimeManager2D.gd" id="3_nw4ll"]
+[ext_resource type="Script" path="res://src/time/ReplayController.gd" id="5_08djj"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_dwyip"]
 

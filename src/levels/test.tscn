@@ -1,8 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://b55b1y1ujwixm"]
+[gd_scene load_steps=10 format=3 uid="uid://b55b1y1ujwixm"]
 
 [ext_resource type="Texture2D" uid="uid://dk3t03aarl6hf" path="res://assets/prototype/texture_07.png" id="1_esosq"]
 [ext_resource type="PackedScene" uid="uid://6up75s4fmthq" path="res://src/enemy/enemy.tscn" id="2_437j4"]
 [ext_resource type="PackedScene" uid="uid://hmsvj6744cwb" path="res://src/player/Player.tscn" id="2_f2dd2"]
+[ext_resource type="Script" path="res://src/time/TimeManager.gd" id="4_n2x6r"]
+[ext_resource type="Script" path="res://src/time/ReplayController.gd" id="5_jkw50"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8pjdf"]
 albedo_texture = ExtResource("1_esosq")
@@ -46,6 +48,16 @@ size = Vector3(6, 3, 18)
 material = SubResource("StandardMaterial3D_8pjdf")
 
 [node name="Enemy" parent="stage" instance=ExtResource("2_437j4")]
+transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 0, 0, -6.26475)
+
+[node name="Enemy2" parent="stage" instance=ExtResource("2_437j4")]
+transform = Transform3D(-0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, 8.83422, -4.76837e-07, -1.38706)
+
+[node name="Enemy3" parent="stage" instance=ExtResource("2_437j4")]
+transform = Transform3D(0.707107, 4.2222e-08, -0.707107, -6.94655e-09, 1, 5.27643e-08, 0.707107, -3.2398e-08, 0.707107, 0.261139, -0.00538683, 8.57365)
+
+[node name="Enemy4" parent="stage" instance=ExtResource("2_437j4")]
+transform = Transform3D(1, 6.94655e-09, -5.96046e-08, -6.94655e-09, 1, 5.27643e-08, 5.96046e-08, -5.27643e-08, 1, 5.99392, -0.00538683, 14.6647)
 
 [node name="env" type="Node3D" parent="."]
 
@@ -58,3 +70,9 @@ shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("2_f2dd2")]
 transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 5, 0, -9)
+
+[node name="TimeManager" type="Node" parent="."]
+script = ExtResource("4_n2x6r")
+
+[node name="ReplayController" type="Node" parent="."]
+script = ExtResource("5_jkw50")

@@ -6,10 +6,13 @@ const TIME_BETWEEN_EVENTS = 0.4
 
 @onready var player = $"../Player"
 @onready var time_manager = $"../TimeManager"
-@onready var playerROs = [$PlayerRO, $PlayerRO2, $PlayerRO3, $PlayerRO4, $PlayerRO5, $PlayerRO6]
+@onready var playerROs = []
+
+const PLAYER_REPLAY_OBJECT = preload("res://src/player/PlayerReplayObject.tscn")
+
 class ReplayPacket:
-	var object: Node2D
-	var position: Vector2
+	var object: Node3D
+	var transform: Transform3D
 	
 class PlayerPacket extends ReplayPacket:
 	var frames_since_event_start := 0
@@ -22,7 +25,7 @@ class PlayerPacket extends ReplayPacket:
 class ReplayFrame:
 	var packets: Array[ReplayPacket]
 	
-class ReplayObject extends Sprite2D:
+class ReplayObject extends Node3D:
 	var target: Node2D
 	func display(packet: ReplayPacket):
 		global_position = packet.position
@@ -39,6 +42,12 @@ var end_playing := false
 
 func _ready():
 	record_objects = get_tree().get_nodes_in_group("Recordable")
+	for i in range(time_manager.event_list.size()+1):
+		var p = PLAYER_REPLAY_OBJECT.instantiate()
+		add_child(p)
+		p.global_position = Vector3(0, 1000, 0)
+		playerROs.append(p)
+		
 	pass # Replace with function body.
 
 
@@ -62,12 +71,12 @@ func game_process(delta):
 	
 	var player_packet = PlayerPacket.new()
 	player_packet.object = player
-	player_packet.position = player.global_position
+	player_packet.transform = player.global_transform
 	time_manager.new_frame()
 	player_packet.frames_since_event_start = time_manager.get_frame()
 	player_packet.event_index = time_manager.time_index
-	player_packets.append(player_packet)
 	display_player_packets(player_packet.get_realtime_frame())
+	player_packets.append(player_packet)
 	
 	
 	
@@ -138,11 +147,11 @@ func display_values(frame: ReplayFrame):
 func display_player_packets(frame: int):
 	var i := 0
 	for packet in get_player_packets(frame):
-		playerROs[i].global_position = packet.position
+		playerROs[i].global_transform = packet.transform
 		i += 1
 	
 	while i < playerROs.size():
-		playerROs[i].global_position = Vector2(-100, -100)
+		playerROs[i].global_position = Vector3(0, 1000, 0)
 		i += 1
 		
 func _on_player_level_finished():
