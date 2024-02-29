@@ -1,0 +1,187 @@
+[gd_scene load_steps=13 format=3 uid="uid://cakfaebsnmmt4"]
+
+[ext_resource type="Script" path="res://src/prototype/ProtoPlayer.gd" id="1_divqn"]
+[ext_resource type="Script" path="res://src/prototype/ProtoEnemy.gd" id="2_6ahbe"]
+[ext_resource type="Script" path="res://src/prototype/TimeEvent.gd" id="3_hqvfw"]
+[ext_resource type="Script" path="res://src/prototype/TimeManager.gd" id="3_nw4ll"]
+[ext_resource type="Script" path="res://src/prototype/ReplayController.gd" id="5_08djj"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_dwyip"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_oepi0"]
+radius = 2.16439
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wqgl1"]
+size = Vector2(1, 0.984375)
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_5rpav"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dk700"]
+radius = 0.520104
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_ee0fh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gkx4u"]
+size = Vector2(49, 48)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="TimeManager" type="Node" parent="." node_paths=PackedStringArray("event_list", "time_ordered")]
+script = ExtResource("3_nw4ll")
+event_list = [NodePath("../Enemy3/Killed"), NodePath("../Enemy2/Killed"), NodePath("../Enemy1/Killed"), NodePath("../Enemy4/Killed")]
+time_ordered = [NodePath("../Enemy1/Killed"), NodePath("../Enemy2/Killed"), NodePath("../Enemy3/Killed"), NodePath("../Enemy4/Killed")]
+
+[node name="Player" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(44, 71)
+scale = Vector2(64, 64)
+texture = SubResource("PlaceholderTexture2D_dwyip")
+script = ExtResource("1_divqn")
+
+[node name="Area2D" type="Area2D" parent="Player"]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/Area2D"]
+shape = SubResource("CircleShape2D_oepi0")
+
+[node name="EndCollider" type="Area2D" parent="Player"]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/EndCollider"]
+position = Vector2(0, 0.0078125)
+shape = SubResource("RectangleShape2D_wqgl1")
+
+[node name="Crosshair" type="Sprite2D" parent="Player"]
+position = Vector2(-0.9375, 2.10938)
+scale = Vector2(0.328125, 0.34375)
+texture = SubResource("PlaceholderTexture2D_5rpav")
+
+[node name="Enemy1" type="Sprite2D" parent="."]
+modulate = Color(0.0666667, 0.529412, 1, 1)
+position = Vector2(190, 404)
+scale = Vector2(64, 64)
+texture = SubResource("PlaceholderTexture2D_dwyip")
+script = ExtResource("2_6ahbe")
+
+[node name="Node" type="Node" parent="Enemy1"]
+
+[node name="Killed" type="Node" parent="Enemy1"]
+script = ExtResource("3_hqvfw")
+
+[node name="Area2D" type="Area2D" parent="Enemy1"]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy1/Area2D"]
+shape = SubResource("CircleShape2D_dk700")
+
+[node name="Enemy2" type="Sprite2D" parent="."]
+modulate = Color(0.0666667, 0.529412, 1, 1)
+position = Vector2(445, 253)
+scale = Vector2(64, 64)
+texture = SubResource("PlaceholderTexture2D_dwyip")
+script = ExtResource("2_6ahbe")
+
+[node name="Node" type="Node" parent="Enemy2"]
+
+[node name="Killed" type="Node" parent="Enemy2"]
+script = ExtResource("3_hqvfw")
+
+[node name="Area2D" type="Area2D" parent="Enemy2"]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy2/Area2D"]
+shape = SubResource("CircleShape2D_dk700")
+
+[node name="Enemy3" type="Sprite2D" parent="."]
+modulate = Color(0.0666667, 0.529412, 1, 1)
+position = Vector2(686, 422)
+scale = Vector2(64, 64)
+texture = SubResource("PlaceholderTexture2D_dwyip")
+script = ExtResource("2_6ahbe")
+
+[node name="Node" type="Node" parent="Enemy3"]
+
+[node name="Killed" type="Node" parent="Enemy3"]
+script = ExtResource("3_hqvfw")
+
+[node name="Area2D" type="Area2D" parent="Enemy3"]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy3/Area2D"]
+shape = SubResource("CircleShape2D_dk700")
+
+[node name="Enemy4" type="Sprite2D" parent="."]
+modulate = Color(0.0666667, 0.529412, 1, 1)
+position = Vector2(894, 310)
+scale = Vector2(64, 64)
+texture = SubResource("PlaceholderTexture2D_dwyip")
+script = ExtResource("2_6ahbe")
+
+[node name="Node" type="Node" parent="Enemy4"]
+
+[node name="Killed" type="Node" parent="Enemy4"]
+script = ExtResource("3_hqvfw")
+
+[node name="Area2D" type="Area2D" parent="Enemy4"]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enemy4/Area2D"]
+shape = SubResource("CircleShape2D_dk700")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(576, 326)
+
+[node name="ReplayController" type="Node" parent="."]
+script = ExtResource("5_08djj")
+
+[node name="PlayerRO" type="Sprite2D" parent="ReplayController"]
+modulate = Color(0.721569, 0.721569, 0.721569, 1)
+scale = Vector2(64, 64)
+texture = SubResource("PlaceholderTexture2D_dwyip")
+
+[node name="PlayerRO2" type="Sprite2D" parent="ReplayController"]
+modulate = Color(0.721569, 0.721569, 0.721569, 1)
+scale = Vector2(64, 64)
+texture = SubResource("PlaceholderTexture2D_dwyip")
+
+[node name="PlayerRO3" type="Sprite2D" parent="ReplayController"]
+modulate = Color(0.721569, 0.721569, 0.721569, 1)
+scale = Vector2(64, 64)
+texture = SubResource("PlaceholderTexture2D_dwyip")
+
+[node name="PlayerRO4" type="Sprite2D" parent="ReplayController"]
+modulate = Color(0.721569, 0.721569, 0.721569, 1)
+scale = Vector2(64, 64)
+texture = SubResource("PlaceholderTexture2D_dwyip")
+
+[node name="PlayerRO5" type="Sprite2D" parent="ReplayController"]
+modulate = Color(0.721569, 0.721569, 0.721569, 1)
+scale = Vector2(64, 64)
+texture = SubResource("PlaceholderTexture2D_dwyip")
+
+[node name="PlayerRO6" type="Sprite2D" parent="ReplayController"]
+modulate = Color(0.721569, 0.721569, 0.721569, 1)
+scale = Vector2(64, 64)
+texture = SubResource("PlaceholderTexture2D_dwyip")
+
+[node name="End" type="Area2D" parent="."]
+position = Vector2(1068, 318)
+collision_layer = 4
+collision_mask = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="End"]
+modulate = Color(1, 0.0509804, 0.113725, 1)
+scale = Vector2(48, 48)
+texture = SubResource("PlaceholderTexture2D_ee0fh")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="End"]
+position = Vector2(-0.5, 0)
+shape = SubResource("RectangleShape2D_gkx4u")
+
+[connection signal="level_finished" from="Player" to="ReplayController" method="_on_player_level_finished"]
+[connection signal="area_entered" from="Player/EndCollider" to="Player" method="_on_end_collider_area_entered"]
