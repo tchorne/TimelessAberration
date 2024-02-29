@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://6up75s4fmthq"]
+
+[ext_resource type="PackedScene" uid="uid://bqvd8wnf3sxty" path="res://src/enemy/model.tscn" id="1_04pjc"]
+
+[node name="Enemy" type="Node3D"]
+
+[node name="human_male" parent="." instance=ExtResource("1_04pjc")]
+transform = Transform3D(0.14, 0, 0, 0, 0.14, 0, 0, 0, 0.14, 0, 0, 0)

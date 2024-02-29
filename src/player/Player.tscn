@@ -1,0 +1,86 @@
+[gd_scene load_steps=8 format=3 uid="uid://hmsvj6744cwb"]
+
+[ext_resource type="Script" path="res://src/player/Player.gd" id="1_a4v6e"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l2iyp"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ii32s"]
+height = 1.2
+
+[sub_resource type="BoxMesh" id="BoxMesh_fp4xo"]
+size = Vector3(0.1, 0.2, 1.5)
+
+[sub_resource type="Animation" id="Animation_eb73p"]
+resource_name = "swing"
+length = 0.3
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.518537, -1.55792, -1.13522), Vector3(-0.610859, 1.29315, -1.84995)]
+}
+
+[sub_resource type="Animation" id="Animation_wcuac"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.518537, -1.55792, -1.13522)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_w4ysw"]
+_data = {
+"RESET": SubResource("Animation_wcuac"),
+"swing": SubResource("Animation_eb73p")
+}
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_a4v6e")
+
+[node name="StandingCollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_l2iyp")
+
+[node name="CrouchingCollisionShape" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.605609, 0)
+shape = SubResource("CapsuleShape3D_ii32s")
+disabled = true
+
+[node name="Neck" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
+
+[node name="Head" type="Node3D" parent="Neck"]
+
+[node name="Eyes" type="Node3D" parent="Neck/Head"]
+
+[node name="Camera3D" type="Camera3D" parent="Neck/Head/Eyes"]
+
+[node name="RayCast3D" type="RayCast3D" parent="."]
+target_position = Vector3(0, 2, 0)
+
+[node name="SwordPivot" type="Node3D" parent="."]
+transform = Transform3D(0.45473, -0.19742, -0.868473, -0.787446, 0.366469, -0.49561, 0.416112, 0.909244, 0.0111873, 0, 1.48581, 0)
+
+[node name="Sword" type="MeshInstance3D" parent="SwordPivot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.760331)
+mesh = SubResource("BoxMesh_fp4xo")
+skeleton = NodePath("../..")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="SwordPivot"]
+libraries = {
+"": SubResource("AnimationLibrary_w4ysw")
+}

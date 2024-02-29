@@ -1,0 +1,60 @@
+[gd_scene load_steps=8 format=3 uid="uid://b55b1y1ujwixm"]
+
+[ext_resource type="Texture2D" uid="uid://dk3t03aarl6hf" path="res://assets/prototype/texture_07.png" id="1_esosq"]
+[ext_resource type="PackedScene" uid="uid://6up75s4fmthq" path="res://src/enemy/enemy.tscn" id="2_437j4"]
+[ext_resource type="PackedScene" uid="uid://hmsvj6744cwb" path="res://src/player/Player.tscn" id="2_f2dd2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8pjdf"]
+albedo_texture = ExtResource("1_esosq")
+uv1_triplanar = true
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jkslo"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_x67gt"]
+sky_material = SubResource("ProceduralSkyMaterial_jkslo")
+
+[sub_resource type="Environment" id="Environment_ontx0"]
+background_mode = 2
+sky = SubResource("Sky_x67gt")
+tonemap_mode = 2
+glow_enabled = true
+
+[node name="world" type="Node3D"]
+
+[node name="stage" type="Node3D" parent="."]
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="stage"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.05591, 3.44153, 3.0498)
+use_collision = true
+flip_faces = true
+size = Vector3(13, 7, 26)
+material = SubResource("StandardMaterial3D_8pjdf")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="stage"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.757206, 0.375827, 1)
+use_collision = true
+size = Vector3(7, 1.39258, 20)
+material = SubResource("StandardMaterial3D_8pjdf")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="stage/CSGBox3D2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, 0)
+operation = 2
+use_collision = true
+size = Vector3(6, 3, 18)
+material = SubResource("StandardMaterial3D_8pjdf")
+
+[node name="Enemy" parent="stage" instance=ExtResource("2_437j4")]
+
+[node name="env" type="Node3D" parent="."]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="env"]
+environment = SubResource("Environment_ontx0")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="env"]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Player" parent="." instance=ExtResource("2_f2dd2")]
+transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 5, 0, -9)

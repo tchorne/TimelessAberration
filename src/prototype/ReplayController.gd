@@ -68,7 +68,6 @@ func game_process(delta):
 	player_packet.event_index = time_manager.time_index
 	player_packets.append(player_packet)
 	display_player_packets(player_packet.get_realtime_frame())
-	print(get_player_packets(player_packet.get_realtime_frame()).size())
 	
 	
 	
@@ -79,7 +78,6 @@ func end_process(delta):
 	time_since_last_frame = 0.0
 	end_index += 1
 	display_values(frames[end_index])
-	#print(get_player_packets(end_index).size())
 	
 	
 func record_values(frame: ReplayFrame):
@@ -139,12 +137,9 @@ func display_values(frame: ReplayFrame):
 
 func display_player_packets(frame: int):
 	var i := 0
-	var printstr = ""
 	for packet in get_player_packets(frame):
 		playerROs[i].global_position = packet.position
-		printstr += str(packet.position)
 		i += 1
-	print(printstr)
 	
 	while i < playerROs.size():
 		playerROs[i].global_position = Vector2(-100, -100)
