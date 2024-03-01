@@ -17,6 +17,11 @@ func get_time_event() -> TimeEvent:
 
 func on_hit():
 	killed_event.complete()
+	#animate_death()
+	
+func animate_death():
+	#print(str(self) + " dies")
+	$Death.play("death")
 
 func on_enemy_selected(e: Enemy):
 	if self == e:

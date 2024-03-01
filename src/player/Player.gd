@@ -1,5 +1,7 @@
 extends CharacterBody3D
 
+signal replayable_action_performed(Callable)
+
 # Player nodes
 
 @onready var neck = $Neck
@@ -19,6 +21,8 @@ extends CharacterBody3D
 # TEMP time variables
 
 @onready var time_manager = $"../TimeManager"
+
+
 
 #Speed variables
 
@@ -105,6 +109,7 @@ func _physics_process(delta):
 		sword_boost_speed = sword_boost_speed_max
 		velocity.y += (sword_boost_direction * sword_boost_speed).y * 0.2
 		if is_instance_valid(highlighted_enemy):
+			replayable_action_performed.emit(highlighted_enemy.animate_death)
 			highlighted_enemy.on_hit()
 	
 	if interact.is_colliding():

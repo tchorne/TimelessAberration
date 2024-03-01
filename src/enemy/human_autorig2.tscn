@@ -1,11 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://cvlospucfv0l4"]
+[gd_scene load_steps=6 format=3 uid="uid://84g4rvj6debd"]
 
-[ext_resource type="PackedScene" uid="uid://dmwxearwdbtiu" path="res://assets/models/human_autorig.blend" id="1_xsoun"]
-[ext_resource type="Shader" path="res://src/shaders/highlightable.gdshader" id="2_5py6n"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_picgk"]
-render_priority = 0
-shader = ExtResource("2_5py6n")
+[ext_resource type="PackedScene" uid="uid://njqkagwdnr2i" path="res://assets/models/human_autorig.gltf" id="1_1eafe"]
 
 [sub_resource type="Animation" id="Animation_vkobq"]
 length = 0.001
@@ -635,7 +630,7 @@ _data = {
 "run": SubResource("Animation_rnk71")
 }
 
-[node name="human_autorig2" instance=ExtResource("1_xsoun")]
+[node name="human_autorig" instance=ExtResource("1_1eafe")]
 
 [node name="Skeleton3D" parent="metarig" index="0"]
 bones/0/rotation = Quaternion(0.12582, 0, 0, 0.992053)
@@ -646,40 +641,25 @@ bones/4/rotation = Quaternion(0.201738, 0, 0, 0.97944)
 bones/5/rotation = Quaternion(-0.0948575, 0, 0, 0.995491)
 bones/6/rotation = Quaternion(-0.0937119, 0, 0, 0.995599)
 bones/7/rotation = Quaternion(-0.605155, -0.345862, -0.356134, 0.622363)
-bones/7/scale = Vector3(1, 1, 1)
 bones/8/rotation = Quaternion(0.188875, 0.718554, -0.184815, 0.643312)
 bones/9/rotation = Quaternion(0.0249722, -0.0949572, 0.00590175, 0.995151)
-bones/9/scale = Vector3(1, 1, 1)
 bones/10/rotation = Quaternion(-0.0360703, 0.0169171, -0.0354674, 0.998576)
 bones/11/rotation = Quaternion(-0.605155, 0.345862, 0.356134, 0.622363)
-bones/11/scale = Vector3(1, 1, 1)
 bones/12/rotation = Quaternion(0.188875, -0.718554, 0.184815, 0.643312)
 bones/13/rotation = Quaternion(0.0249722, 0.0949572, -0.00590175, 0.995151)
-bones/13/scale = Vector3(1, 1, 1)
 bones/14/rotation = Quaternion(-0.0360703, -0.0169171, 0.0354674, 0.998576)
 bones/15/rotation = Quaternion(3.13469e-08, 0.696936, 0.717133, 3.0464e-08)
-bones/15/scale = Vector3(1, 1, 1)
 bones/16/rotation = Quaternion(3.13469e-08, 0.696936, 0.717133, 3.0464e-08)
-bones/16/scale = Vector3(1, 1, 1)
 bones/17/rotation = Quaternion(-0.152455, -0.793331, -0.285504, 0.515627)
 bones/18/rotation = Quaternion(-0.152455, 0.793331, 0.285504, 0.515627)
 bones/19/rotation = Quaternion(0.986515, 0, 0, 0.163672)
-bones/19/scale = Vector3(1, 1, 0.999997)
 bones/20/rotation = Quaternion(0.0875415, 0, 0, 0.996161)
-bones/20/scale = Vector3(1, 1, 1)
 bones/22/rotation = Quaternion(-1.20504e-08, 0.961249, -0.275682, 4.20175e-08)
-bones/22/scale = Vector3(1, 1, 1)
 bones/23/rotation = Quaternion(0.679706, 0.679706, -0.194936, 0.194936)
 bones/24/rotation = Quaternion(0.986515, 0, 0, 0.163672)
-bones/24/scale = Vector3(1, 1, 0.999997)
 bones/25/rotation = Quaternion(0.0875415, 0, 0, 0.996161)
-bones/25/scale = Vector3(1, 1, 1)
 bones/27/rotation = Quaternion(-1.20504e-08, 0.961249, -0.275682, 4.20175e-08)
-bones/27/scale = Vector3(1, 1, 1)
 bones/28/rotation = Quaternion(0.679706, -0.679706, 0.194936, 0.194936)
-
-[node name="male" parent="metarig/Skeleton3D" index="0"]
-surface_material_override/0 = SubResource("ShaderMaterial_picgk")
 
 [node name="Poses" type="AnimationPlayer" parent="." index="1"]
 libraries = {

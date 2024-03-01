@@ -1,19 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://b4ykgtqa6ykgg"]
+[gd_scene load_steps=4 format=3 uid="uid://b4ykgtqa6ykgg"]
 
 [ext_resource type="Script" path="res://src/player/PlayerReplayObject.gd" id="1_5urxk"]
-[ext_resource type="PackedScene" uid="uid://cvlospucfv0l4" path="res://src/enemy/human_autorig.tscn" id="2_0w6ux"]
-[ext_resource type="Shader" path="res://src/shaders/PlayerReplayObject.gdshader" id="2_dpgh5"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_xxf8a"]
-render_priority = 0
-shader = ExtResource("2_dpgh5")
+[ext_resource type="PackedScene" uid="uid://84g4rvj6debd" path="res://src/enemy/human_autorig2.tscn" id="2_p1nm7"]
+[ext_resource type="Material" uid="uid://16e55uf5shak" path="res://src/shaders/highlightable_material.tres" id="3_8yj4j"]
 
 [node name="PlayerReplayObject" type="Node3D"]
 script = ExtResource("1_5urxk")
 
-[node name="human_autorig" parent="." instance=ExtResource("2_0w6ux")]
+[node name="human_autorig" parent="." instance=ExtResource("2_p1nm7")]
 
 [node name="male" parent="human_autorig/metarig/Skeleton3D" index="0"]
-surface_material_override/0 = SubResource("ShaderMaterial_xxf8a")
+surface_material_override/0 = ExtResource("3_8yj4j")
 
 [editable path="human_autorig"]

@@ -16,9 +16,9 @@ class ReplayPacket:
 	
 class PlayerPacket extends ReplayPacket:
 	var frames_since_event_start := 0
-	var event_index := -1
+	var time_index := -1
 	func get_start_frame():
-		return int(event_index * TIME_BETWEEN_EVENTS / UPDATE_RATE)
+		return int(time_index * TIME_BETWEEN_EVENTS / UPDATE_RATE)
 	func get_realtime_frame():
 		return get_start_frame() + frames_since_event_start
 	
@@ -37,6 +37,8 @@ var frames: Array[ReplayFrame] = []
 var player_packets: Array[PlayerPacket] = []
 var time_since_last_frame = 0.0
 
+var time_callables: Dictionary = {}
+
 var end_index := 0
 var end_playing := false
 
@@ -48,7 +50,7 @@ func _ready():
 		p.global_position = Vector3(0, 1000, 0)
 		playerROs.append(p)
 		
-	pass # Replace with function body.
+	player.replayable_action_performed.connect(add_callable)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -67,18 +69,18 @@ func game_process(delta):
 	record_values(frame)
 	time_since_last_frame = 0.0
 	
-	
-	
 	var player_packet = PlayerPacket.new()
 	player_packet.object = player
 	player_packet.transform = player.global_transform
+	
 	time_manager.new_frame()
+	display_player_packets(get_realtime_frame())
+	call_replay_callables(get_realtime_frame())
+	
 	player_packet.frames_since_event_start = time_manager.get_frame()
-	player_packet.event_index = time_manager.time_index
-	display_player_packets(player_packet.get_realtime_frame())
+	player_packet.time_index = time_manager.time_index
+	
 	player_packets.append(player_packet)
-	
-	
 	
 func end_process(delta):
 	time_since_last_frame += delta
@@ -87,7 +89,6 @@ func end_process(delta):
 	time_since_last_frame = 0.0
 	end_index += 1
 	display_values(frames[end_index])
-	
 	
 func record_values(frame: ReplayFrame):
 	for object in record_objects:
@@ -143,6 +144,22 @@ func display_values(frame: ReplayFrame):
 		ro.display(packet)
 
 	display_player_packets(end_index)
+
+func add_callable(c: Callable):
+	var frame = get_realtime_frame()
+	if frame in time_callables:
+		time_callables[frame].append(c)
+	else:
+		time_callables[frame] = [c]
+	print("Callable added at time " + str(frame))
+
+func call_replay_callables(frame: int):
+	if frame in time_callables:
+		for c in time_callables[frame]:
+			c.call()
+
+func get_realtime_frame():
+	return int(time_manager.time_index * TIME_BETWEEN_EVENTS / UPDATE_RATE) + time_manager.get_frame()
 
 func display_player_packets(frame: int):
 	var i := 0
