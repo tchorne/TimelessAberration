@@ -1,8 +1,8 @@
 [gd_scene load_steps=5 format=3 uid="uid://6up75s4fmthq"]
 
-[ext_resource type="PackedScene" uid="uid://bqvd8wnf3sxty" path="res://src/enemy/model.tscn" id="1_04pjc"]
 [ext_resource type="Script" path="res://src/enemy/enemy.gd" id="1_bpoq0"]
 [ext_resource type="Script" path="res://src/time/TimeEvent.gd" id="2_wt6a2"]
+[ext_resource type="PackedScene" uid="uid://cvlospucfv0l4" path="res://src/enemy/human_autorig.tscn" id="3_mu4ms"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_elslm"]
 radius = 0.243814
@@ -10,9 +10,6 @@ height = 2.41184
 
 [node name="Enemy" type="Node3D"]
 script = ExtResource("1_bpoq0")
-
-[node name="human_male" parent="." instance=ExtResource("1_04pjc")]
-transform = Transform3D(0.14, 0, 0, 0, 0.14, 0, 0, 0, 0.14, 0, 0, 0)
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
 collision_layer = 3
@@ -26,4 +23,7 @@ script = ExtResource("2_wt6a2")
 
 [node name="Death" type="AnimationPlayer" parent="."]
 
-[editable path="human_male"]
+[node name="human_autorig" parent="." instance=ExtResource("3_mu4ms")]
+transform = Transform3D(1.3131, 0, 0, 0, 1.3131, 0, 0, 0, 1.3131, 0, 0, 0)
+
+[editable path="human_autorig"]

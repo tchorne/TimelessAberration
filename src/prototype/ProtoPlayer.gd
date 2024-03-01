@@ -36,6 +36,6 @@ func _process(delta):
 		time_manager.next_event()
 
 
-func _on_end_collider_area_entered(area):
+func _on_end_collider_area_entered(_area):
 	level_finished.emit()
 	pass # Replace with function body.

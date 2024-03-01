@@ -6,6 +6,6 @@ assets/prototype
  - Prototype grid textures under CC0 from kenney.nl
 assets/models
  - Human model under CC0 from https://opengameart.org/content/low-poly-human-male
- - Rig created with Mixamo's automatic rigging tool
+ - Rig created with automatic weights on blenders Rigify add-on (all the animations were made by me)
 
 a significant portion of the player script comes from this first person controller tutorial https://www.youtube.com/watch?v=xIKErMgJ1Yk

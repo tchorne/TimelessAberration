@@ -1,19 +1,19 @@
-[gd_scene load_steps=4 format=3 uid="uid://c4t5wpbqmyqow"]
+[gd_scene load_steps=5 format=3 uid="uid://b4ykgtqa6ykgg"]
 
-[ext_resource type="PackedScene" uid="uid://bqvd8wnf3sxty" path="res://src/enemy/model.tscn" id="1_wwdb6"]
+[ext_resource type="Script" path="res://src/player/PlayerReplayObject.gd" id="1_5urxk"]
+[ext_resource type="PackedScene" uid="uid://cvlospucfv0l4" path="res://src/enemy/human_autorig.tscn" id="2_0w6ux"]
 [ext_resource type="Shader" path="res://src/shaders/PlayerReplayObject.gdshader" id="2_dpgh5"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_th1h2"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xxf8a"]
 render_priority = 0
 shader = ExtResource("2_dpgh5")
 
 [node name="PlayerReplayObject" type="Node3D"]
+script = ExtResource("1_5urxk")
 
-[node name="human_male" parent="." instance=ExtResource("1_wwdb6")]
-transform = Transform3D(-0.14, 0, -1.22392e-08, 0, 0.14, 0, 1.22392e-08, 0, -0.14, 0, 0, 0)
+[node name="human_autorig" parent="." instance=ExtResource("2_0w6ux")]
 
-[node name="male" parent="human_male/Armature/Skeleton3D" index="0"]
-transform = Transform3D(1, 0, 0, -1.42109e-14, 1, 0, 5.0822e-21, 0, 1, 27.8078, -1.28644, 8.53029e-05)
-surface_material_override/0 = SubResource("ShaderMaterial_th1h2")
+[node name="male" parent="human_autorig/metarig/Skeleton3D" index="0"]
+surface_material_override/0 = SubResource("ShaderMaterial_xxf8a")
 
-[editable path="human_male"]
+[editable path="human_autorig"]

@@ -46,6 +46,9 @@ func next_event():
 	event_index += 1
 	player.global_transform = next.player_transform
 	
+	GlobalEventBus.new_event()
+	next.begin()
+	
 	var time_ordered_pos = time_ordered.find(next)
 	time_index = time_ordered_pos + 1
 	assert(time_ordered_pos != -1, "Event not in time ordered")
