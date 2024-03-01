@@ -9,6 +9,7 @@ extends CharacterBody3D
 @onready var ray_cast_3d = $RayCast3D
 @onready var eyes = $Neck/Head/Eyes
 @onready var camera_3d = $Neck/Head/Eyes/Camera3D
+@onready var interact = $Neck/Head/Eyes/Camera3D/Interact
 
 # Sword nodes
 
@@ -77,6 +78,8 @@ var sword_boost_direction := Vector3.FORWARD
 var direction := Vector3.ZERO
 var mouse_sens = 0.3
 
+var highlighted_enemy: Enemy
+
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -101,11 +104,18 @@ func _physics_process(delta):
 		sword_boost_direction = -head.global_transform.basis.z.normalized()
 		sword_boost_speed = sword_boost_speed_max
 		velocity.y += (sword_boost_direction * sword_boost_speed).y * 0.2
-		if enemy_attack_detector.get_overlapping_bodies().size() > 0:
-			var e = enemy_attack_detector.get_overlapping_bodies()[0]
-			if e.get_parent().has_method("on_hit"):
-				e.get_parent().on_hit()
-		
+		if is_instance_valid(highlighted_enemy):
+			highlighted_enemy.on_hit()
+	
+	if interact.is_colliding():
+		var e: Enemy = interact.get_collider().get_parent()
+		if highlighted_enemy != e:
+			GlobalEventBus.select_enemy(e)
+			highlighted_enemy = e
+	else:
+		if is_instance_valid(highlighted_enemy):
+			highlighted_enemy = null
+			GlobalEventBus.select_enemy(null)
 	move_and_slide()
 
 func calculate_movement(delta):

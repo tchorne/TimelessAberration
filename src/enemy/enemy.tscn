@@ -23,3 +23,7 @@ shape = SubResource("CapsuleShape3D_elslm")
 
 [node name="TimeEvent" type="Node" parent="." groups=["TimeEvents"]]
 script = ExtResource("2_wt6a2")
+
+[node name="Death" type="AnimationPlayer" parent="."]
+
+[editable path="human_male"]

@@ -17,11 +17,11 @@ void fragment() {
 	float phase = TIME;
 	if (lines){
 		if (fract(fract(SCREEN_UV.x*100.0+SCREEN_UV.y*50.0)+phase) < band_thickness){
-			ALBEDO.rgb -= vec3(0.1,0.1,0.1);
+			ALBEDO.rgb -= vec3(0.4,0.4,0.4);
 		} 
 	}
 	if (player && fract(fract(SCREEN_UV.x*100.0+SCREEN_UV.y*50.0)+phase) < band_thickness) discard;
-	
+	if (player) ALBEDO.rgb *= 0.1;
 }
 
 void light() {

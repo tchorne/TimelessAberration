@@ -4,10 +4,11 @@ extends Node
 #@export var enemy_time_ordered: Array[Enemy]
 
 ## Event order from player perspective 
-@export var event_list: Array[TimeEvent] = []
+var event_list: Array[TimeEvent] = []
+@export var last_event: TimeEvent
 
 ## Event order fro game perspective
-@export var time_ordered: Array[TimeEvent] = []
+var time_ordered: Array[TimeEvent] = []
 
 @onready var player = $"../Player"
 
@@ -24,10 +25,15 @@ func _ready():
 	for e in get_tree().get_nodes_in_group("TimeEvents"):
 		assert(e is TimeEvent, "None TimeEvent in TimeEvents group")
 		time_ordered.append(e)
+		e.connect("completed", next_event)
 	event_list = time_ordered.duplicate()
 	event_list.shuffle()
 	
+	event_list.append(last_event)
+	time_ordered.append(last_event)
+	last_event.connect("completed", end_level)
 	
+	next_event()
 	#for i in range(time_ordered.size()):
 	#	if i == time_index:
 	#		time_ordered[i].get_parent().modulate = Color.BLUE
@@ -44,13 +50,17 @@ func next_event():
 	time_index = time_ordered_pos + 1
 	assert(time_ordered_pos != -1, "Event not in time ordered")
 	for i in range(time_ordered.size()):
-		time_ordered[i].get_parent().visible = i > time_ordered_pos
+		time_ordered[i].get_parent().visible = i >= time_ordered_pos
 
 		#if i == time_index:
 		#	time_ordered[i].get_parent().modulate = Color.BLUE
 		#else:
 		#	time_ordered[i].get_parent().modulate = Color.BLACK
-		
+
+
+func end_level():
+	pass
+
 func new_frame():
 	frames_since_event_start += 1
 

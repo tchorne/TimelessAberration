@@ -1,10 +1,10 @@
 class_name TimeEvent
 extends Node
 
-signal complete
+signal completed
 
 var objective: String = ""
 var player_transform: Transform3D
 
-func on_complete():
-	complete.emit()
+func complete():
+	completed.emit()
