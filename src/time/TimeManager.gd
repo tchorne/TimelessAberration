@@ -13,7 +13,7 @@ var event_list: Array[TimeEvent] = []
 var time_ordered: Array[TimeEvent] = []
 
 @onready var replay_controller = ReplayController
-@onready var player = $"../Player"
+@onready var player = get_tree().get_first_node_in_group('player')
 
 var event_index = 0
 var time_index = 0
@@ -34,22 +34,18 @@ func _ready():
 		time_ordered.append(e)
 		e.connect("completed", next_event)
 	event_list = time_ordered.duplicate()
-	event_list.shuffle()
+	event_list.sort_custom(TimeEvent.compare)
 	
 	event_list.append(last_event)
 	time_ordered.append(last_event)
 	last_event.connect("completed", end_level)
 	
 	next_event()
-	#for i in range(time_ordered.size()):
-	#	if i == time_index:
-	#		time_ordered[i].get_parent().modulate = Color.BLUE
-	#	else:
-	#		time_ordered[i].get_parent().modulate = Color.BLACK
 			
 func next_event():
 	frames_since_event_start = 0
 	var next : TimeEvent = event_list[event_index]
+	assert(next.player_transform.origin != Vector3.ZERO)
 	event_index += 1
 	player.global_transform = next.player_transform
 	
@@ -73,7 +69,8 @@ func next_event():
 	
 
 func end_level():
-	%ReplayCam.current = true
+	
+	get_node("../stage").get_node("%ReplayCam").current = true
 
 	ReplayController._on_player_level_finished()
 	pass

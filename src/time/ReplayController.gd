@@ -1,11 +1,13 @@
 extends Node
 
 const UPDATE_RATE = 1.0/60.0
-const TIME_BETWEEN_EVENTS = 0.4
+const TIME_BETWEEN_EVENTS = 0.2
 
 @onready var player = get_tree().get_first_node_in_group("player")
 @onready var time_manager = get_tree().root.find_child("TimeManager", true, false)
 @onready var playerROs = []
+
+var time_index_to_player_ro = {}
 
 const PLAYER_REPLAY_OBJECT = preload("res://src/player/PlayerReplayObject.tscn")
 const NUM_PLAYER_ROS = 10
@@ -58,10 +60,12 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	var delta2 = GlobalSettings.game_speed * delta
+
 	if not end_playing:
-		game_process(delta)
+		game_process(delta2)
 	else:
-		end_process(delta)
+		end_process(delta2)
 
 func game_process(delta):
 	time_since_last_frame += delta
@@ -174,14 +178,36 @@ func get_realtime_frame():
 
 func display_player_packets(frame: int):
 	var i := 0
-	for packet in get_player_packets(frame):
-		playerROs[i].global_transform = packet.transform
-		playerROs[i].update_animation(packet.animation)
-		i += 1
+	var unused_players = time_index_to_player_ro.values()
+	var unused_indices = time_index_to_player_ro.keys()
 	
-	while i < playerROs.size():
-		playerROs[i].global_position = Vector3(0, 1000, 0)
+	for packet in get_player_packets(frame):
+		var p
+		if (
+			not packet.time_index in time_index_to_player_ro 
+			or not is_instance_valid(time_index_to_player_ro[packet.time_index])
+			or not time_index_to_player_ro[packet.time_index].usable
+		):
+			p = PLAYER_REPLAY_OBJECT.instantiate()
+			add_child(p)
+			time_index_to_player_ro[packet.time_index] = p
+			p.fade_in()
+		
+		p = time_index_to_player_ro[packet.time_index]
+		#playerROs[i].global_transform = packet.transform
+		#playerROs[i].update_animation(packet.animation)
+		p.global_transform = packet.transform
+		p.update_animation(packet.animation)
+		unused_players.erase(p)
 		i += 1
+		
+	for p in unused_players:
+		if is_instance_valid(p):
+			p.fade_out()
+	
+	#while i < playerROs.size():
+	#	playerROs[i].global_position = Vector3(0, 1000, 0)
+	#	i += 1
 		
 func _on_player_level_finished():
 	#print("end playing")
@@ -189,7 +215,7 @@ func _on_player_level_finished():
 	final_replay_frames = -1
 	for packet in player_packets:
 		final_replay_frames = max(final_replay_frames, packet.get_realtime_frame())
-			
+	final_replay_frames += int(1.0/UPDATE_RATE)
 	
 	end_playing = true
 	time_since_last_frame = 0.0

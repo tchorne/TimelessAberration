@@ -7,18 +7,32 @@ extends Node3D
 @onready var poses = $human_autorig/Poses
 @onready var attack_manager = $AttackManager
 @onready var hurt_box = $HurtBox
+@onready var death = $Death
+
+@export var priority: int = -1
+
+@export var event_start_node: Node3D
 
 var death_time = 100000
 @export var dead := false
+
+func _process(delta):
+	var delta2 = GlobalSettings.game_speed * delta
+	death.advance(delta2)
+	poses.advance(delta2)
 
 func _ready():
 	poses.play("gun_idle")
 	killed_event.player_transform = global_transform
 	killed_event.objective = "KILL"
+	killed_event.priority = priority
 	GlobalEventBus.connect("enemy_selected", on_enemy_selected)
 	GlobalEventBus.connect("new_event_begun", on_other_event_begun)
 	GlobalEventBus.connect("final_replay_reset", on_replay_reset)
 	killed_event.begun.connect(on_event_begun)
+	if is_instance_valid(event_start_node):
+		killed_event.player_transform = event_start_node.global_transform
+	
 
 func get_time_event() -> TimeEvent:
 	return killed_event
@@ -32,6 +46,7 @@ func on_hit():
 func animate_death():
 	#print(str(self) + " dies")
 	$Death.play("death")
+	dead = true
 
 func on_enemy_selected(e: Enemy):
 	if self == e:
@@ -47,7 +62,6 @@ func on_event_begun():
 	
 	dead = false
 	visible = not dead
-	
 
 func on_other_event_begun(realtime: int):
 	static_body_3d.set_collision_layer_value(2, false)
@@ -57,10 +71,11 @@ func on_other_event_begun(realtime: int):
 	
 	
 	dead = realtime >= death_time
-	
+	$Death.play("RESET")
 	visible = not dead
-	print("event")
-	
+	#print("event")
+	$AttackManager/AnimationPlayer.stop()
+
 	pass
 
 func _on_attack_area_body_entered(body):
@@ -68,7 +83,7 @@ func _on_attack_area_body_entered(body):
 	attack_manager.begin_attack(attack_manager.AttackType.GUN)
 
 func on_replay_reset():
-	print("reset")
+	#print("reset")
 	#mesh.set_instance_shader_parameter("linethickness", 1.0)
 	$Death.play("RESET")
 	dead = false

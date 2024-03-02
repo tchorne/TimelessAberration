@@ -1,6 +1,7 @@
 extends Node3D
 
-var speed = 10.0
+var speed = 20.0
 
 func _process(delta):
-	global_position += -global_transform.basis.z * delta * speed
+	var delta2 = GlobalSettings.game_speed * delta
+	global_position += -global_transform.basis.z * delta2 * speed

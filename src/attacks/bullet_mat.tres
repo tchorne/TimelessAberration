@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://dgrhrwhpyh5mp"]
+
+[ext_resource type="Shader" path="res://src/shaders/unlit.gdshader" id="1_vtgj7"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_vtgj7")
+shader_parameter/color = Color(1, 0, 0, 1)
