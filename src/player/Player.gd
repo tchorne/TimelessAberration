@@ -8,7 +8,7 @@ signal replayable_action_performed(Callable)
 @onready var head = $Neck/Head
 @onready var standing_collision_shape = $StandingCollisionShape
 @onready var crouching_collision_shape = $CrouchingCollisionShape
-@onready var ray_cast_3d = $RayCast3D
+@onready var ray_cast_3d = $CeilingCast
 @onready var eyes = $Neck/Head/Eyes
 @onready var camera_3d = $Neck/Head/Eyes/Camera3D
 @onready var interact = $Neck/Head/Eyes/Camera3D/Interact
