@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b55b1y1ujwixm"]
+[gd_scene load_steps=13 format=3 uid="uid://b55b1y1ujwixm"]
 
 [ext_resource type="Texture2D" uid="uid://dk3t03aarl6hf" path="res://assets/prototype/texture_07.png" id="1_esosq"]
 [ext_resource type="PackedScene" uid="uid://6up75s4fmthq" path="res://src/enemy/enemy.tscn" id="2_437j4"]
@@ -6,7 +6,6 @@
 [ext_resource type="Script" path="res://src/props/Elevator.gd" id="3_a2hqh"]
 [ext_resource type="Script" path="res://src/time/TimeManager.gd" id="4_n2x6r"]
 [ext_resource type="Script" path="res://src/time/TimeEvent.gd" id="4_sqjec"]
-[ext_resource type="Script" path="res://src/time/ReplayController.gd" id="5_jkw50"]
 [ext_resource type="Texture2D" uid="uid://dni775yeywlvs" path="res://assets/UI/crosshair.png" id="6_h2lfv"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8pjdf"]
@@ -92,6 +91,10 @@ transform_target = NodePath("Node3D")
 [node name="Node3D" type="Node3D" parent="stage/Elevator/InElevator"]
 transform = Transform3D(-0.79916, 0, 0.601118, 0, 1, 0, -0.601118, 0, -0.79916, 6.72992, 0, 11.5647)
 
+[node name="ReplayCam" type="Camera3D" parent="stage"]
+unique_name_in_owner = true
+transform = Transform3D(-0.707107, 0.353553, -0.612372, 0, 0.866025, 0.5, 0.707107, 0.353553, -0.612372, -2.87341, 6.9305, -9.83738)
+
 [node name="env" type="Node3D" parent="."]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="env"]
@@ -107,9 +110,6 @@ transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107
 [node name="TimeManager" type="Node" parent="." node_paths=PackedStringArray("last_event")]
 script = ExtResource("4_n2x6r")
 last_event = NodePath("../stage/Elevator/InElevator")
-
-[node name="ReplayController" type="Node" parent="."]
-script = ExtResource("5_jkw50")
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3

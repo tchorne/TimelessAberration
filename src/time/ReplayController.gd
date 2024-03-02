@@ -1,14 +1,14 @@
-class_name ReplayController
 extends Node
 
 const UPDATE_RATE = 1.0/60.0
 const TIME_BETWEEN_EVENTS = 0.4
 
-@onready var player = $"../Player"
-@onready var time_manager = $"../TimeManager"
+@onready var player = get_tree().get_first_node_in_group("player")
+@onready var time_manager = get_tree().root.find_child("TimeManager", true, false)
 @onready var playerROs = []
 
 const PLAYER_REPLAY_OBJECT = preload("res://src/player/PlayerReplayObject.tscn")
+const NUM_PLAYER_ROS = 10
 
 class ReplayPacket:
 	var object: Node3D
@@ -37,15 +37,17 @@ var replay_objects: Array[ReplayObject]
 var frames: Array[ReplayFrame] = []
 var player_packets: Array[PlayerPacket] = []
 var time_since_last_frame = 0.0
+var final_replay_frames = 1
 
 var time_callables: Dictionary = {}
 
 var end_index := 0
 var end_playing := false
 
+
 func _ready():
 	record_objects = get_tree().get_nodes_in_group("Recordable")
-	for i in range(time_manager.event_list.size()+1):
+	for i in range(NUM_PLAYER_ROS):
 		var p = PLAYER_REPLAY_OBJECT.instantiate()
 		add_child(p)
 		p.global_position = Vector3(0, 1000, 0)
@@ -89,11 +91,15 @@ func game_process(delta):
 	
 func end_process(delta):
 	time_since_last_frame += delta
-	if end_index >= frames.size() - 1: end_index = 0
+	if end_index >= final_replay_frames - 1: 
+		end_index = 0
+		GlobalEventBus.emit_signal("final_replay_reset")
+		
 	if not time_since_last_frame > UPDATE_RATE: return
 	time_since_last_frame = 0.0
 	end_index += 1
 	display_values(frames[end_index])
+	call_replay_callables(end_index)
 	
 func record_values(frame: ReplayFrame):
 	for object in record_objects:
@@ -156,7 +162,7 @@ func add_callable(c: Callable):
 		time_callables[frame].append(c)
 	else:
 		time_callables[frame] = [c]
-	print("Callable added at time " + str(frame))
+	#print("Callable added at time " + str(frame))
 
 func call_replay_callables(frame: int):
 	if frame in time_callables:
@@ -174,10 +180,16 @@ func display_player_packets(frame: int):
 		i += 1
 	
 	while i < playerROs.size():
-		playerROs[i].global_position = Vector3(0, 0, 0)
+		playerROs[i].global_position = Vector3(0, 1000, 0)
 		i += 1
 		
 func _on_player_level_finished():
-	print("end playing")
+	#print("end playing")
+	GlobalEventBus.emit_signal("final_replay_reset")
+	final_replay_frames = -1
+	for packet in player_packets:
+		final_replay_frames = max(final_replay_frames, packet.get_realtime_frame())
+			
+	
 	end_playing = true
 	time_since_last_frame = 0.0

@@ -1,11 +1,20 @@
-[gd_scene load_steps=9 format=3 uid="uid://hmsvj6744cwb"]
+[gd_scene load_steps=12 format=3 uid="uid://hmsvj6744cwb"]
 
 [ext_resource type="Script" path="res://src/player/Player.gd" id="1_a4v6e"]
+[ext_resource type="AudioStream" uid="uid://cx02ubmnhcd3m" path="res://assets/sounds/Custom/death.wav" id="2_c4g3h"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_l2iyp"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ii32s"]
 height = 1.2
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_wikwt"]
+height = 0.442836
+radius = 0.272378
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_nqglc"]
+height = 0.765003
+radius = 0.262001
 
 [sub_resource type="BoxMesh" id="BoxMesh_fp4xo"]
 size = Vector3(0.005, 0.1, 0.9)
@@ -73,12 +82,25 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
 [node name="Eyes" type="Node3D" parent="Neck/Head"]
 
 [node name="Camera3D" type="Camera3D" parent="Neck/Head/Eyes"]
+current = true
 
 [node name="Interact" type="RayCast3D" parent="Neck/Head/Eyes/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0611274, 0)
 target_position = Vector3(0, 0, -3)
 collision_mask = 2
 collide_with_areas = true
+
+[node name="BulletHurtBox" type="Area3D" parent="Neck/Head/Eyes/Camera3D"]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Neck/Head/Eyes/Camera3D/BulletHurtBox"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, -0.16967, -0.0572173)
+shape = SubResource("CylinderShape3D_wikwt")
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Neck/Head/Eyes/Camera3D/BulletHurtBox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.702714, 0)
+shape = SubResource("CylinderShape3D_nqglc")
 
 [node name="SwordPivot" type="Node3D" parent="Neck"]
 transform = Transform3D(0.454729, -0.197423, -0.868473, -0.787446, 0.366468, -0.49561, 0.416112, 0.909244, 0.0111834, 0, -0.154738, 0)
@@ -104,3 +126,12 @@ collision_mask = 2
 [node name="CollisionShape3D" type="CollisionShape3D" parent="EnemyAttackDetector"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.54631, -0.969604)
 shape = SubResource("BoxShape3D_lnr0a")
+
+[node name="Sounds" type="Node3D" parent="."]
+
+[node name="SoundDeath" type="AudioStreamPlayer" parent="Sounds"]
+unique_name_in_owner = true
+stream = ExtResource("2_c4g3h")
+bus = &"Sfx"
+
+[connection signal="area_entered" from="Neck/Head/Eyes/Camera3D/BulletHurtBox" to="." method="_on_bullet_hurt_box_area_entered"]

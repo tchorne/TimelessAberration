@@ -22,7 +22,8 @@ signal replayable_action_performed(Callable)
 
 @onready var time_manager = $"../TimeManager"
 
-
+# Sound variables
+@onready var sound_death = %SoundDeath
 
 #Speed variables
 
@@ -251,3 +252,7 @@ func get_animation() -> String:
 	if not is_on_floor(): pass # return "jump"
 	if direction.length_squared() < 0.01: pass # return "idle"
 	return "run"
+
+
+func _on_bullet_hurt_box_area_entered(area):
+	sound_death.play()

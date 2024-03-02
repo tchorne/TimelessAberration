@@ -12,7 +12,7 @@ var event_list: Array[TimeEvent] = []
 ## Event order fro game perspective
 var time_ordered: Array[TimeEvent] = []
 
-@onready var replay_controller = $"../ReplayController"
+@onready var replay_controller = ReplayController
 @onready var player = $"../Player"
 
 var event_index = 0
@@ -53,15 +53,17 @@ func next_event():
 	event_index += 1
 	player.global_transform = next.player_transform
 	
-	GlobalEventBus.new_event()
-	next.begin()
 	
 	var time_ordered_pos = time_ordered.find(next)
 	time_index = time_ordered_pos + 1
+	
+	GlobalEventBus.new_event(ReplayController.get_realtime_frame())
+	next.begin()
+	
 	assert(time_ordered_pos != -1, "Event not in time ordered")
 	for i in range(time_ordered.size()):
-		time_ordered[i].get_parent().visible = i >= time_ordered_pos
-
+		#time_ordered[i].get_parent().visible = i >= time_ordered_pos
+		pass
 		#if i == time_index:
 		#	time_ordered[i].get_parent().modulate = Color.BLUE
 		#else:
@@ -71,6 +73,9 @@ func next_event():
 	
 
 func end_level():
+	%ReplayCam.current = true
+
+	ReplayController._on_player_level_finished()
 	pass
 
 func new_frame():

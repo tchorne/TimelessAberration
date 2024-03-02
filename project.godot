@@ -15,9 +15,14 @@ run/main_scene="res://src/levels/test.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="res://src/globals/default_bus_layout.tres"
+
 [autoload]
 
 GlobalEventBus="*res://src/globals/GlobalEventBus.gd"
+ReplayController="*res://src/time/ReplayController.gd"
 
 [filesystem]
 
