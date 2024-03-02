@@ -51,7 +51,9 @@ _data = {
 [sub_resource type="BoxShape3D" id="BoxShape3D_lnr0a"]
 size = Vector3(1, 1, 2.09692)
 
-[node name="Player" type="CharacterBody3D"]
+[node name="Player" type="CharacterBody3D" groups=["player"]]
+collision_layer = 4
+collision_mask = 9
 script = ExtResource("1_a4v6e")
 
 [node name="StandingCollisionShape" type="CollisionShape3D" parent="."]

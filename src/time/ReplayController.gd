@@ -13,6 +13,7 @@ const PLAYER_REPLAY_OBJECT = preload("res://src/player/PlayerReplayObject.tscn")
 class ReplayPacket:
 	var object: Node3D
 	var transform: Transform3D
+	var animation: String = ""
 	
 class PlayerPacket extends ReplayPacket:
 	var frames_since_event_start := 0
@@ -72,6 +73,9 @@ func game_process(delta):
 	var player_packet = PlayerPacket.new()
 	player_packet.object = player
 	player_packet.transform = player.global_transform
+	var xz_velocity = Vector3(player.velocity.x, 0, player.velocity.z)
+	if xz_velocity.length() > 0.2:
+		player_packet.transform = player_packet.transform.looking_at(player.global_position - xz_velocity)
 	
 	time_manager.new_frame()
 	display_player_packets(get_realtime_frame())
@@ -79,6 +83,7 @@ func game_process(delta):
 	
 	player_packet.frames_since_event_start = time_manager.get_frame()
 	player_packet.time_index = time_manager.time_index
+	player_packet.animation = player.get_animation()
 	
 	player_packets.append(player_packet)
 	
@@ -165,10 +170,11 @@ func display_player_packets(frame: int):
 	var i := 0
 	for packet in get_player_packets(frame):
 		playerROs[i].global_transform = packet.transform
+		playerROs[i].update_animation(packet.animation)
 		i += 1
 	
 	while i < playerROs.size():
-		playerROs[i].global_position = Vector3(0, 1000, 0)
+		playerROs[i].global_position = Vector3(0, 0, 0)
 		i += 1
 		
 func _on_player_level_finished():

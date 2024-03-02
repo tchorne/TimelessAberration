@@ -12,6 +12,7 @@ var event_list: Array[TimeEvent] = []
 ## Event order fro game perspective
 var time_ordered: Array[TimeEvent] = []
 
+@onready var replay_controller = $"../ReplayController"
 @onready var player = $"../Player"
 
 var event_index = 0

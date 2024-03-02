@@ -10,3 +10,9 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
+
+func update_animation(anim: String):
+	if poses.current_animation != anim:
+		poses.play("RESET")
+		poses.play(anim)
+		pass

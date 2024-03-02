@@ -233,13 +233,21 @@ func calculate_movement(delta):
 		velocity.z = 0
 	
 	if not is_on_floor():
-		velocity.x *= 0.5
-		velocity.z *= 0.5
-	velocity += launch_momentum*1.5
+		#velocity.x *= 0.5
+		#velocity.z *= 0.5
+		pass
+	
+	velocity += launch_momentum*0.5
 	
 	sword_boost_speed = move_toward(sword_boost_speed, 0, sword_boost_decay*delta)
-	velocity.x += (sword_boost_direction * sword_boost_speed).x
-	velocity.z += (sword_boost_direction * sword_boost_speed).z
+	#velocity.x += (sword_boost_direction * sword_boost_speed).x
+	#velocity.z += (sword_boost_direction * sword_boost_speed).z
 	
 	pass
 
+func get_animation() -> String:
+	if sliding: return "slide"
+	if crouching: pass # return "crouch"
+	if not is_on_floor(): pass # return "jump"
+	if direction.length_squared() < 0.01: pass # return "idle"
+	return "run"
