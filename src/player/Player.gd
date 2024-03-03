@@ -19,12 +19,15 @@ signal replayable_action_performed(Callable)
 @onready var sword_animation_player = $Neck/SwordPivot/AnimationPlayer
 @onready var enemy_attack_detector = $EnemyAttackDetector
 
+
 # TEMP time variables
 
 @onready var time_manager = $"../TimeManager"
 
 # Sound variables
 @onready var sound_death = %SoundDeath
+@onready var sound_run = $Sounds/SoundRun
+@onready var sound_slice = %SoundSlice
 
 var my_velocity := Vector3.ZERO
 
@@ -94,6 +97,8 @@ var highlighted_enemy: Enemy
 var time_since_jump = 0.0
 
 var enemy_being_killed : Node
+@export var distance_to_enemy : float = 0
+var position_before_attack: Vector3
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -125,10 +130,12 @@ func _physics_process(delta):
 		my_velocity.y += (sword_boost_direction * sword_boost_speed).y * 0.2
 		if is_instance_valid(highlighted_enemy) and not is_instance_valid(enemy_being_killed):
 			enemy_being_killed = highlighted_enemy
-			
+			position_before_attack = global_position
 			kill_animation_player.play("kill")
 			
-	
+	if (position_before_attack != null and is_instance_valid(enemy_being_killed) and distance_to_enemy > 0):
+		global_position = position_before_attack.lerp(enemy_being_killed.global_position, distance_to_enemy)
+		
 	if interact.is_colliding():
 		var e: Enemy = interact.get_collider().get_parent()
 		if highlighted_enemy != e:
@@ -142,6 +149,11 @@ func _physics_process(delta):
 	velocity = my_velocity * GlobalSettings.game_speed
 	move_and_slide()
 	my_velocity = velocity / GlobalSettings.game_speed
+	
+	process_sounds()
+
+func process_sounds():
+	sound_run.stream_paused = not (is_on_floor() and direction.length() > 0.2 and not sliding)
 
 func calculate_movement(delta):
 	# Getting movement input
@@ -297,8 +309,8 @@ func get_animation() -> String:
 	return "run"
 
 func kill_and_teleport():
-	replayable_action_performed.emit(highlighted_enemy.animate_death)
-	highlighted_enemy.on_hit()
+	replayable_action_performed.emit(enemy_being_killed.animate_death)
+	enemy_being_killed.on_hit()
 	enemy_being_killed = null
 	
 	

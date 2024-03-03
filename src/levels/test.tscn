@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://b55b1y1ujwixm"]
+[gd_scene load_steps=10 format=3 uid="uid://b55b1y1ujwixm"]
 
 [ext_resource type="PackedScene" uid="uid://hmsvj6744cwb" path="res://src/player/Player.tscn" id="2_f2dd2"]
 [ext_resource type="PackedScene" uid="uid://cis3vmrrkd35l" path="res://src/stages/stage_2.tscn" id="4_2t31a"]
 [ext_resource type="Script" path="res://src/time/TimeManager.gd" id="4_n2x6r"]
+[ext_resource type="Material" uid="uid://b3vslolu28rbq" path="res://src/time/objective_indicator_mat.tres" id="4_y3hq2"]
 [ext_resource type="Texture2D" uid="uid://dni775yeywlvs" path="res://assets/UI/crosshair.png" id="6_h2lfv"]
 
 [sub_resource type="Environment" id="Environment_ontx0"]
@@ -10,6 +11,60 @@ background_mode = 1
 background_color = Color(0.313726, 0.313726, 0.313726, 1)
 tonemap_mode = 2
 glow_enabled = true
+
+[sub_resource type="Animation" id="Animation_idq2h"]
+resource_name = "eventstart"
+length = 1.8
+tracks/0/type = "method"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.8),
+"transitions": PackedFloat32Array(1, 1),
+"values": [{
+"args": [],
+"method": &"create_objective"
+}, {
+"args": [],
+"method": &"destroy_objective"
+}]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:objective_mat:shader_parameter/t")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1, 1.6, 1.8),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 1.0, 1.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_5vn52"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:objective_mat:shader_parameter/t")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xrres"]
+_data = {
+"RESET": SubResource("Animation_5vn52"),
+"eventstart": SubResource("Animation_idq2h")
+}
 
 [node name="world" type="Node3D"]
 
@@ -30,6 +85,12 @@ transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107
 [node name="TimeManager" type="Node" parent="." node_paths=PackedStringArray("last_event")]
 script = ExtResource("4_n2x6r")
 last_event = NodePath("../stage/Elevator/InElevator")
+objective_mat = ExtResource("4_y3hq2")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="TimeManager"]
+libraries = {
+"": SubResource("AnimationLibrary_xrres")
+}
 
 [node name="UI" type="Control" parent="."]
 layout_mode = 3

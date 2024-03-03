@@ -1,0 +1,9 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://b3vslolu28rbq"]
+
+[ext_resource type="Shader" path="res://src/shaders/objective.gdshader" id="1_3boob"]
+
+[resource]
+render_priority = 0
+shader = ExtResource("1_3boob")
+shader_parameter/color = Color(1, 0, 0, 1)
+shader_parameter/t = 1.0

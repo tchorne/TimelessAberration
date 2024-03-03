@@ -9,6 +9,8 @@ extends Node3D
 @onready var hurt_box = $HurtBox
 @onready var death = $Death
 
+@export var attackType: AttackManager.AttackType = AttackManager.AttackType.GUN
+
 @export var priority: int = -1
 
 @export var event_start_node: Node3D
@@ -80,7 +82,7 @@ func on_other_event_begun(realtime: int):
 
 func _on_attack_area_body_entered(body):
 	if dead: return
-	attack_manager.begin_attack(attack_manager.AttackType.GUN)
+	attack_manager.begin_attack(attackType)
 
 func on_replay_reset():
 	#print("reset")

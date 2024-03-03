@@ -58,6 +58,7 @@ transform = Transform3D(-5.96046e-08, 0, -1, 0, 1, 0, 1, 0, -5.96046e-08, -7.088
 
 [node name="Enemy" parent="." node_paths=PackedStringArray("event_start_node") instance=ExtResource("2_b5bh0")]
 transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 2.008, 5.32587, 13.8118)
+attackType = 1
 priority = 2
 event_start_node = NodePath("../Room/CSGBox3D6/HighStart")
 
@@ -68,6 +69,7 @@ event_start_node = NodePath("../StartPos")
 
 [node name="Enemy3" parent="." node_paths=PackedStringArray("event_start_node") instance=ExtResource("2_b5bh0")]
 transform = Transform3D(-0.999434, 4.2222e-08, 0.0336436, 4.11082e-08, 1, -3.38002e-08, -0.0336436, -3.2398e-08, -0.999434, 1.62714, 5.32048, 35.6904)
+attackType = 1
 priority = 3
 event_start_node = NodePath("../Room/CSGBox3D6/HighStart")
 
@@ -87,10 +89,10 @@ shape = SubResource("BoxShape3D_2h1b3")
 
 [node name="InElevator" type="Node" parent="Elevator" node_paths=PackedStringArray("transform_target")]
 script = ExtResource("4_84eym")
-transform_target = NodePath("../../StartPos")
+transform_target = NodePath("Node3D")
 
 [node name="Node3D" type="Node3D" parent="Elevator/InElevator"]
-transform = Transform3D(-0.965103, 0, 0.261869, 0, 1, 0, -0.261869, 0, -0.965103, 5.17701, 0, 8.69171)
+transform = Transform3D(-0.999995, 0, 0.00315902, 0, 1, 0, -0.00315902, 0, -0.999995, -2.63564, 7.13774, 15.102)
 
 [node name="ReplayCam" type="Camera3D" parent="."]
 unique_name_in_owner = true

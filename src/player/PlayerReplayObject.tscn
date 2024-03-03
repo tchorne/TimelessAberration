@@ -4,6 +4,21 @@
 [ext_resource type="PackedScene" uid="uid://84g4rvj6debd" path="res://src/enemy/human_autorig2.tscn" id="2_p1nm7"]
 [ext_resource type="Material" uid="uid://16e55uf5shak" path="res://src/shaders/highlightable_material.tres" id="3_8yj4j"]
 
+[sub_resource type="Animation" id="Animation_bt3ju"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("human_autorig/metarig/Skeleton3D/male:instance_shader_parameters/fade")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
 [sub_resource type="Animation" id="Animation_pq0ti"]
 resource_name = "in"
 length = 0.8
@@ -18,21 +33,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [0.0, 1.0]
-}
-
-[sub_resource type="Animation" id="Animation_bt3ju"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("human_autorig/metarig/Skeleton3D/male:instance_shader_parameters/fade")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
 }
 
 [sub_resource type="Animation" id="Animation_eohfg"]
@@ -79,6 +79,33 @@ script = ExtResource("1_5urxk")
 
 [node name="Skeleton3D" parent="human_autorig/metarig" index="0"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+bones/0/rotation = Quaternion(0.12582, 0, 0, 0.992053)
+bones/1/rotation = Quaternion(-0.0644764, 0, 0, 0.997919)
+bones/2/rotation = Quaternion(-0.0774642, 0, 0, 0.996995)
+bones/3/rotation = Quaternion(0.00162715, 0, 0, 0.999999)
+bones/4/rotation = Quaternion(0.201738, 0, 0, 0.97944)
+bones/5/rotation = Quaternion(-0.0948575, 0, 0, 0.995491)
+bones/6/rotation = Quaternion(-0.0937119, 0, 0, 0.995599)
+bones/7/rotation = Quaternion(-0.605155, -0.345862, -0.356134, 0.622363)
+bones/8/rotation = Quaternion(0.188875, 0.718554, -0.184815, 0.643312)
+bones/9/rotation = Quaternion(0.0249722, -0.0949572, 0.00590175, 0.995151)
+bones/10/rotation = Quaternion(-0.0360703, 0.0169171, -0.0354674, 0.998576)
+bones/11/rotation = Quaternion(-0.605155, 0.345862, 0.356134, 0.622363)
+bones/12/rotation = Quaternion(0.188875, -0.718554, 0.184815, 0.643312)
+bones/13/rotation = Quaternion(0.0249722, 0.0949572, -0.00590175, 0.995151)
+bones/14/rotation = Quaternion(-0.0360703, -0.0169171, 0.0354674, 0.998576)
+bones/15/rotation = Quaternion(3.13469e-08, 0.696936, 0.717133, 3.0464e-08)
+bones/16/rotation = Quaternion(3.13469e-08, 0.696936, 0.717133, 3.0464e-08)
+bones/17/rotation = Quaternion(-0.152455, -0.793331, -0.285504, 0.515627)
+bones/18/rotation = Quaternion(-0.152455, 0.793331, 0.285504, 0.515627)
+bones/19/rotation = Quaternion(0.986515, 0, 0, 0.163672)
+bones/20/rotation = Quaternion(0.0875415, 0, 0, 0.996161)
+bones/22/rotation = Quaternion(-1.20504e-08, 0.961249, -0.275682, 4.20175e-08)
+bones/23/rotation = Quaternion(0.679706, 0.679706, -0.194936, 0.194936)
+bones/24/rotation = Quaternion(0.986515, 0, 0, 0.163672)
+bones/25/rotation = Quaternion(0.0875415, 0, 0, 0.996161)
+bones/27/rotation = Quaternion(-1.20504e-08, 0.961249, -0.275682, 4.20175e-08)
+bones/28/rotation = Quaternion(0.679706, -0.679706, 0.194936, 0.194936)
 
 [node name="male" parent="human_autorig/metarig/Skeleton3D" index="0"]
 instance_shader_parameters/fade = 0.0
