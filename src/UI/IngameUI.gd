@@ -16,4 +16,5 @@ func _process(delta):
 func set_cctv(val):
 	if val:
 		cctv.visible = true
-		
+	else:
+		cctv.visible = false

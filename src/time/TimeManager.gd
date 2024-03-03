@@ -35,7 +35,7 @@ func init():
 	#for e in enemy_time_ordered:
 	#	time_ordered.append(e.get_time_event())
 	time_ordered.clear()
-
+	get_tree().get_first_node_in_group("ui").set_cctv(false)
 
 	for e in get_tree().get_nodes_in_group("TimeEvents"):
 		if e.is_queued_for_deletion(): 
@@ -94,7 +94,8 @@ func end_level():
 	
 	get_tree().get_first_node_in_group("replay_cam").current = true
 	get_tree().get_first_node_in_group("ui").set_cctv(true)
-
+	player.invincible = true
+	player.invincibility_timer.stop()
 	ReplayController._on_player_level_finished()
 	pass
 

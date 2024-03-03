@@ -62,6 +62,8 @@ func reset():
 	frames.clear()
 	player_packets.clear()
 	time_callables.clear()
+	end_playing = false
+	end_index = 0
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

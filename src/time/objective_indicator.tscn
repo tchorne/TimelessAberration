@@ -4,9 +4,11 @@
 
 [sub_resource type="SphereMesh" id="SphereMesh_gskrk"]
 material = ExtResource("1_hjkw5")
+radius = 0.75
+height = 1.5
 
 [node name="Objective" type="Node3D"]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-transform = Transform3D(2.52766, 0, 0, 0, 2.52766, 0, 0, 0, 2.52766, 0, 1.84868, 0)
+transform = Transform3D(2.52766, 0, 0, 0, 2.52766, 0, 0, 0, 2.52766, 0, 1.44216, 0)
 mesh = SubResource("SphereMesh_gskrk")

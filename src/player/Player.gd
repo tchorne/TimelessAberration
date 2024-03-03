@@ -23,6 +23,7 @@ signal replayable_action_performed(Callable)
 # TEMP time variables
 
 @onready var time_manager = $"../TimeManager"
+@onready var invincibility_timer = $InvincibilityTimer
 
 # Sound variables
 @onready var sound_death = %SoundDeath
@@ -134,6 +135,9 @@ func _physics_process(delta):
 			enemy_being_killed = highlighted_enemy
 			position_before_attack = global_position
 			kill_animation_player.play("kill")
+			invincible = true
+			$InvincibilityTimer.start(4.0)
+			
 			
 	if (position_before_attack != null and is_instance_valid(enemy_being_killed) and distance_to_enemy > 0):
 		global_position = position_before_attack.lerp(enemy_being_killed.global_position, distance_to_enemy)
@@ -311,6 +315,7 @@ func get_animation() -> String:
 	return "run"
 
 func kill_and_teleport():
+	if !(is_instance_valid(enemy_being_killed)): return
 	replayable_action_performed.emit(enemy_being_killed.animate_death)
 	enemy_being_killed.on_hit()
 	enemy_being_killed = null
@@ -320,3 +325,6 @@ func _on_bullet_hurt_box_area_entered(area):
 	if !invincible:
 		sound_death.play()
 		LevelManager.restart()
+
+func _on_invincibility_timer_timeout():
+	invincible = false

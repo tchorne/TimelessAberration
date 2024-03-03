@@ -338,4 +338,8 @@ libraries = {
 "": SubResource("AnimationLibrary_i5emd")
 }
 
+[node name="InvincibilityTimer" type="Timer" parent="."]
+one_shot = true
+
 [connection signal="area_entered" from="Neck/Head/Eyes/Camera3D/BulletHurtBox" to="." method="_on_bullet_hurt_box_area_entered"]
+[connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]
