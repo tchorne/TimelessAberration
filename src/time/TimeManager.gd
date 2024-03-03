@@ -29,22 +29,39 @@ var current_event : TimeEvent
 var objective_object : Node3D
 
 
-func _ready():
+func init():
 	#for e in enemy_list:
 	#	event_list.append(e.get_time_event())
 	#for e in enemy_time_ordered:
 	#	time_ordered.append(e.get_time_event())
+	time_ordered.clear()
+
+
 	for e in get_tree().get_nodes_in_group("TimeEvents"):
-		assert(e is TimeEvent, "None TimeEvent in TimeEvents group")
+		if e.is_queued_for_deletion(): 
+			continue
+		assert(e is TimeEvent, "Non-TimeEvent in TimeEvents group")
 		time_ordered.append(e)
 		e.connect("completed", next_event)
+		
 	event_list = time_ordered.duplicate()
 	event_list.sort_custom(TimeEvent.compare)
+	
+	for e in get_tree().get_nodes_in_group("last_event"):
+		if not e.is_queued_for_deletion():
+			last_event = e
 	
 	event_list.append(last_event)
 	time_ordered.append(last_event)
 	last_event.connect("completed", end_level)
 	
+	if is_instance_valid(objective_object):
+		objective_object.queue_free()
+		
+	objective_object = null
+	animation_player.stop()
+	
+	event_index = 0
 	next_event()
 			
 func next_event():
@@ -71,13 +88,12 @@ func next_event():
 		#	time_ordered[i].get_parent().modulate = Color.BLUE
 		#else:
 		#	time_ordered[i].get_parent().modulate = Color.BLACK
-
-
 	
 
 func end_level():
 	
-	get_node("../stage").get_node("%ReplayCam").current = true
+	get_tree().get_first_node_in_group("replay_cam").current = true
+	get_tree().get_first_node_in_group("ui").set_cctv(true)
 
 	ReplayController._on_player_level_finished()
 	pass
@@ -93,6 +109,7 @@ func create_objective():
 	objective_object = OBJECTIVE_PACKED.instantiate()
 	add_child(objective_object)
 	objective_object.global_position = current_event.objective_position
+	$Label.text = "[p align=center][shake]" + current_event.objective
 
 func destroy_objective():
 	if is_instance_valid(objective_object):

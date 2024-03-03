@@ -48,7 +48,7 @@ var end_playing := false
 
 
 func _ready():
-	record_objects = get_tree().get_nodes_in_group("Recordable")
+	#record_objects = get_tree().get_nodes_in_group("Recordable")
 	for i in range(NUM_PLAYER_ROS):
 		var p = PLAYER_REPLAY_OBJECT.instantiate()
 		add_child(p)
@@ -57,6 +57,11 @@ func _ready():
 		
 	player.replayable_action_performed.connect(add_callable)
 
+func reset():
+	time_callables.clear()
+	frames.clear()
+	player_packets.clear()
+	time_callables.clear()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://w3nrij72lnf8"]
+
+[node name="Credits" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="RichTextLabel" type="RichTextLabel" parent="."]
+layout_mode = 0
+offset_right = 447.0
+offset_bottom = 191.0
+text = "Created by Thomas Horne
+
+Heavyweight font by Nerfect Typography Works 
+
+Special thanks to Kenney and the other CC0 artists whose work was used
+And a special thanks to Acerola for running the jam!
+"

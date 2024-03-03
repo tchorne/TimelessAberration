@@ -70,13 +70,13 @@ script = ExtResource("3_oh6jd")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0551758, 0.948212, 0)
 shape = SubResource("BoxShape3D_2h1b3")
 
-[node name="InElevator" type="Node" parent="Elevator"]
+[node name="InElevator" type="Node" parent="Elevator" groups=["last_event"]]
 script = ExtResource("4_shwl7")
 
 [node name="Node3D" type="Node3D" parent="Elevator/InElevator"]
 transform = Transform3D(-0.79916, 0, 0.601118, 0, 1, 0, -0.601118, 0, -0.79916, 6.72992, 0, 11.5647)
 
-[node name="ReplayCam" type="Camera3D" parent="."]
+[node name="ReplayCam" type="Camera3D" parent="." groups=["replay_cam"]]
 unique_name_in_owner = true
 transform = Transform3D(-0.707107, 0.353553, -0.612372, 0, 0.866025, 0.5, 0.707107, 0.353553, -0.612372, -2.87341, 6.9305, -9.83738)
 

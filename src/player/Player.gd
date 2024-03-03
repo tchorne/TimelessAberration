@@ -100,6 +100,8 @@ var enemy_being_killed : Node
 @export var distance_to_enemy : float = 0
 var position_before_attack: Vector3
 
+@export var invincible: bool = false
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
@@ -315,4 +317,6 @@ func kill_and_teleport():
 	
 	
 func _on_bullet_hurt_box_area_entered(area):
-	sound_death.play()
+	if !invincible:
+		sound_death.play()
+		LevelManager.restart()
