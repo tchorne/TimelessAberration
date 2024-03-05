@@ -70,8 +70,9 @@ script = ExtResource("3_oh6jd")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0551758, 0.948212, 0)
 shape = SubResource("BoxShape3D_2h1b3")
 
-[node name="InElevator" type="Node" parent="Elevator" groups=["last_event"]]
+[node name="InElevator" type="Node" parent="Elevator" node_paths=PackedStringArray("transform_target") groups=["last_event"]]
 script = ExtResource("4_shwl7")
+transform_target = NodePath("Node3D")
 
 [node name="Node3D" type="Node3D" parent="Elevator/InElevator"]
 transform = Transform3D(-0.79916, 0, 0.601118, 0, 1, 0, -0.601118, 0, -0.79916, 6.72992, 0, 11.5647)

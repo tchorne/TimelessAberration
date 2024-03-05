@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://b55b1y1ujwixm"]
+[gd_scene load_steps=15 format=3 uid="uid://b55b1y1ujwixm"]
 
 [ext_resource type="PackedScene" uid="uid://hmsvj6744cwb" path="res://src/player/Player.tscn" id="2_f2dd2"]
 [ext_resource type="Script" path="res://src/time/TimeManager.gd" id="4_n2x6r"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://src/player/SpeedModifier.gd" id="6_vhan7"]
 [ext_resource type="Script" path="res://src/UI/IngameUI.gd" id="7_pgxec"]
 [ext_resource type="Shader" path="res://src/shaders/cctv.gdshader" id="9_6jxh5"]
+[ext_resource type="PackedScene" uid="uid://bb17t6c07r81m" path="res://src/UI/end_screen.tscn" id="9_rsk77"]
 
 [sub_resource type="Environment" id="Environment_ontx0"]
 background_mode = 1
@@ -179,6 +180,7 @@ grow_horizontal = 2
 theme = ExtResource("5_kstf7")
 bbcode_enabled = true
 text = "[p align=center][shake]KILL"
+fit_content = true
 visible_characters = 0
 visible_ratio = 0.0
 
@@ -223,3 +225,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="EndScreen" parent="UI" instance=ExtResource("9_rsk77")]
+layout_mode = 1

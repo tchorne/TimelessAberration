@@ -25,6 +25,7 @@ GlobalEventBus="*res://src/globals/GlobalEventBus.gd"
 ReplayController="*res://src/time/ReplayController.gd"
 GlobalSettings="*res://src/globals/GlobalSettings.gd"
 LevelManager="*res://src/globals/LevelManager.gd"
+GlobalMusic="*res://src/globals/GlobalMusic.tscn"
 
 [filesystem]
 

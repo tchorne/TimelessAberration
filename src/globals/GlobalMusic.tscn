@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://duyu0mr5w8jie"]
+
+[ext_resource type="Script" path="res://src/globals/GlobalMusic.gd" id="1_80cnx"]
+[ext_resource type="AudioStream" uid="uid://cncdbjosv6lrv" path="res://assets/sounds/Music/a_flawless_getaway_loop.mp3" id="2_b4op4"]
+
+[node name="GlobalMusic" type="Node"]
+script = ExtResource("1_80cnx")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("2_b4op4")
+volume_db = -6.0
+autoplay = true
+bus = &"Music"

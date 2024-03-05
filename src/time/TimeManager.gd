@@ -60,6 +60,7 @@ func init():
 		
 	objective_object = null
 	animation_player.stop()
+	player.init()
 	
 	event_index = 0
 	next_event()
@@ -91,7 +92,7 @@ func next_event():
 	
 
 func end_level():
-	
+	GlobalSettings.game_active = false
 	get_tree().get_first_node_in_group("replay_cam").current = true
 	get_tree().get_first_node_in_group("ui").set_cctv(true)
 	player.invincible = true

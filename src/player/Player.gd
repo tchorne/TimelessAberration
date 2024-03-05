@@ -29,6 +29,7 @@ signal replayable_action_performed(Callable)
 @onready var sound_death = %SoundDeath
 @onready var sound_run = $Sounds/SoundRun
 @onready var sound_slice = %SoundSlice
+@onready var sound_whoosh = %SoundWhoosh
 
 var my_velocity := Vector3.ZERO
 
@@ -106,8 +107,9 @@ var position_before_attack: Vector3
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
-func _ready():
+func init():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	GlobalSettings.game_active = true
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -124,19 +126,27 @@ func _physics_process(delta):
 	
 	var delta2 = GlobalSettings.game_speed * delta
 	
-	calculate_movement(delta2)
+	ingame_process(delta2)
+
+func ingame_process(delta):
+	calculate_movement(delta)
 	
 	if Input.is_action_just_pressed("primary"):
 		sword_animation_player.play("swing")
 		sword_boost_direction = -head.global_transform.basis.z.normalized()
 		sword_boost_speed = sword_boost_speed_max
 		my_velocity.y += (sword_boost_direction * sword_boost_speed).y * 0.2
+		
 		if is_instance_valid(highlighted_enemy) and not is_instance_valid(enemy_being_killed):
 			enemy_being_killed = highlighted_enemy
 			position_before_attack = global_position
+			kill_animation_player.play("RESET")
 			kill_animation_player.play("kill")
 			invincible = true
 			$InvincibilityTimer.start(4.0)
+		else:
+			%SoundWhoosh.play()
+
 			
 			
 	if (position_before_attack != null and is_instance_valid(enemy_being_killed) and distance_to_enemy > 0):

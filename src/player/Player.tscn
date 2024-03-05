@@ -1,10 +1,12 @@
-[gd_scene load_steps=24 format=3 uid="uid://hmsvj6744cwb"]
+[gd_scene load_steps=26 format=3 uid="uid://hmsvj6744cwb"]
 
 [ext_resource type="Script" path="res://src/player/Player.gd" id="1_a4v6e"]
 [ext_resource type="AudioStream" uid="uid://cx02ubmnhcd3m" path="res://assets/sounds/Custom/death.wav" id="2_c4g3h"]
+[ext_resource type="PackedScene" uid="uid://ci4dxrs4h0olj" path="res://src/player/katana.tscn" id="2_j24ug"]
 [ext_resource type="Shader" path="res://src/player/PlayerKillTransition.gdshader" id="3_6lc43"]
 [ext_resource type="AudioStream" uid="uid://ccgauuhiwdom8" path="res://assets/sounds/Custom/sword.wav" id="3_m5ini"]
 [ext_resource type="AudioStream" uid="uid://cydjn1ct3hps2" path="res://assets/sounds/KenneyFPS/walking.ogg" id="3_q3d0i"]
+[ext_resource type="AudioStream" uid="uid://cex3jafmawmog" path="res://assets/sounds/FreesoundCC0/whoosh.wav" id="5_87vxl"]
 [ext_resource type="Shader" path="res://src/shaders/Vignette.gdshader" id="6_hvcsk"]
 [ext_resource type="Texture2D" uid="uid://2q65erkpip4o" path="res://assets/UI/vignette.png" id="7_eaf2m"]
 
@@ -29,37 +31,61 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
+tracks/0/path = NodePath("katana:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0.518537, -1.55792, -1.13522)]
+"values": [Vector3(0.26335, -0.531111, -0.332705)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("katana:quaternion")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Quaternion(-0.0468009, 0.0831896, -0.837338, 0.538288)]
 }
 
-[sub_resource type="Animation" id="Animation_eb73p"]
+[sub_resource type="Animation" id="Animation_hwd8a"]
 resource_name = "swing"
-length = 0.3
-step = 0.025
+length = 0.5
+step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath(".:rotation")
-tracks/0/interp = 2
+tracks/0/path = NodePath("katana:position")
+tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(1, 1),
+"times": PackedFloat32Array(0, 0.08, 0.2, 0.3, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector3(0.977553, -1.55078, -1.12501), Vector3(-0.610859, 1.29315, -1.84995)]
+"values": [Vector3(0.173781, -0.488023, -0.503139), Vector3(-0.122297, -0.276469, 0.123713), Vector3(-0.196317, -0.22358, 0.280425), Vector3(-0.163749, -0.0498298, 0.357156), Vector3(0.26335, -0.531111, -0.332705)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("katana:quaternion")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.08, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Quaternion(0.143075, -0.212821, -0.814103, 0.521031), Quaternion(0.572039, 0.546051, 0.596661, -0.13636), Quaternion(0.695055, 0.562791, 0.447361, -0.00570603), Quaternion(0.788778, 0.54417, 0.247108, 0.143685), Quaternion(0.7772, 0.345805, -0.281416, 0.444055), Quaternion(-0.0468009, 0.0831896, -0.837338, 0.538288)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_w4ysw"]
 _data = {
 "RESET": SubResource("Animation_wcuac"),
-"swing": SubResource("Animation_eb73p")
+"swing": SubResource("Animation_hwd8a")
 }
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_lnr0a"]
@@ -146,10 +172,35 @@ tracks/4/keys = {
 "update": 0,
 "values": [0.0]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("slice:anchor_left")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("slice:anchor_right")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
 
 [sub_resource type="Animation" id="Animation_qpf16"]
 resource_name = "kill"
 length = 3.0
+step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -224,6 +275,30 @@ tracks/5/keys = {
 "update": 0,
 "values": [0.0, 1.0, 1.0, 0.0]
 }
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("slice:anchor_left")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, 0.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("slice:anchor_right")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [1.0, 1.0, 0.0]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_i5emd"]
 _data = {
@@ -254,6 +329,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.8, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Neck/Head/Eyes"]
 current = true
+near = 0.014
 
 [node name="Interact" type="RayCast3D" parent="Neck/Head/Eyes/Camera3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0611274, 0)
@@ -281,6 +357,10 @@ transform = Transform3D(1, -2.98023e-08, 9.31323e-10, 2.98023e-08, 1, -6.51926e-
 visible = false
 mesh = SubResource("BoxMesh_fp4xo")
 skeleton = NodePath("../../..")
+
+[node name="katana" parent="Neck/SwordPivot" instance=ExtResource("2_j24ug")]
+transform = Transform3D(-0.0740593, 0.159055, 0.0298893, -0.161827, -0.0723755, -0.0158279, -0.00199045, -0.0337628, 0.174737, 0.26335, -0.531111, -0.332705)
+rotation_edit_mode = 1
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Neck/SwordPivot"]
 libraries = {
@@ -310,6 +390,11 @@ unique_name_in_owner = true
 stream = ExtResource("3_m5ini")
 bus = &"Sfx"
 
+[node name="SoundWhoosh" type="AudioStreamPlayer" parent="Sounds"]
+unique_name_in_owner = true
+stream = ExtResource("5_87vxl")
+bus = &"Sfx"
+
 [node name="SoundRun" type="AudioStreamPlayer3D" parent="Sounds"]
 stream = ExtResource("3_q3d0i")
 pitch_scale = 1.27
@@ -332,6 +417,17 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="slice" type="ColorRect" parent="KillAnimation"]
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_bottom = 2.0
+grow_horizontal = 0
+grow_vertical = 2
+color = Color(2, 2, 2, 1)
 
 [node name="KillAnimationPlayer" type="AnimationPlayer" parent="KillAnimation"]
 libraries = {

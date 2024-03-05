@@ -1,6 +1,7 @@
 extends Node
 
 var game_speed = 1.0
+var game_active = false
 
 func update_game_speed(val: float):
 	game_speed = val
