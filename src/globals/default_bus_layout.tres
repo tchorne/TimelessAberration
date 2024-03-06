@@ -1,7 +1,21 @@
-[gd_resource type="AudioBusLayout" format=3 uid="uid://efk6dtvgi1po"]
+[gd_resource type="AudioBusLayout" load_steps=3 format=3 uid="uid://efk6dtvgi1po"]
+
+[sub_resource type="AudioEffectLowPassFilter" id="AudioEffectLowPassFilter_t6l5m"]
+resource_name = "LowPassFilter"
+cutoff_hz = 3000.0
+resonance = 0.72
+db = 1
+
+[sub_resource type="AudioEffectAmplify" id="AudioEffectAmplify_xnkn8"]
+resource_name = "Amplify"
+volume_db = -4.0
 
 [resource]
 bus/0/volume_db = -6.24739
+bus/0/effect/0/effect = SubResource("AudioEffectLowPassFilter_t6l5m")
+bus/0/effect/0/enabled = false
+bus/0/effect/1/effect = SubResource("AudioEffectAmplify_xnkn8")
+bus/0/effect/1/enabled = false
 bus/1/name = &"Sfx"
 bus/1/solo = false
 bus/1/mute = false
@@ -14,3 +28,9 @@ bus/2/mute = false
 bus/2/bypass_fx = false
 bus/2/volume_db = 0.0
 bus/2/send = &"Master"
+bus/3/name = &"Alert"
+bus/3/solo = false
+bus/3/mute = false
+bus/3/bypass_fx = false
+bus/3/volume_db = 0.0
+bus/3/send = &"Master"

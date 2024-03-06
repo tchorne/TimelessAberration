@@ -12,3 +12,7 @@ func _ready():
 func _process(delta):
 	pass
 
+func toggle_muffle(val):
+	AudioServer.set_bus_effect_enabled(0, 0, val)
+	AudioServer.set_bus_effect_enabled(0, 1, val)
+	pass

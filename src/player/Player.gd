@@ -13,6 +13,7 @@ signal replayable_action_performed(Callable)
 @onready var camera_3d = $Neck/Head/Eyes/Camera3D
 @onready var interact = $Neck/Head/Eyes/Camera3D/Interact
 @onready var kill_animation_player = $KillAnimation/KillAnimationPlayer
+@onready var bullet_slicer = $Neck/Head/Eyes/Camera3D/BulletSlicer
 
 # Sword nodes
 
@@ -30,6 +31,9 @@ signal replayable_action_performed(Callable)
 @onready var sound_run = $Sounds/SoundRun
 @onready var sound_slice = %SoundSlice
 @onready var sound_whoosh = %SoundWhoosh
+@onready var sound_bullet_hit = %SoundBulletHit
+@onready var sound_slide = %SoundSlide
+@onready var sound_jump = %SoundJump
 
 var my_velocity := Vector3.ZERO
 
@@ -144,8 +148,12 @@ func ingame_process(delta):
 			kill_animation_player.play("kill")
 			invincible = true
 			$InvincibilityTimer.start(4.0)
+		elif bullet_slicer.is_colliding():
+			bullet_slicer.get_collider().get_parent().queue_free()
+			sound_bullet_hit.play()
 		else:
 			%SoundWhoosh.play()
+			
 
 			
 			
@@ -170,6 +178,7 @@ func ingame_process(delta):
 
 func process_sounds():
 	sound_run.stream_paused = not (is_on_floor() and direction.length() > 0.2 and not sliding)
+	sound_slide.stream_paused = not (is_on_floor() and sliding)
 
 func calculate_movement(delta):
 	# Getting movement input
@@ -264,6 +273,7 @@ func calculate_movement(delta):
 		launch_momentum = Vector3(my_velocity.x, 0, my_velocity.z) * 0.2 * (1.5 if sliding else 1.0)
 		sliding = false
 		time_since_jump = 0.0
+		sound_jump.play()
 	
 	if not Input.is_action_pressed("crouch"):
 		sliding = false
@@ -318,6 +328,7 @@ func calculate_movement(delta):
 	pass
 
 func get_animation() -> String:
+	if is_instance_valid(enemy_being_killed): return "attack"
 	if sliding: return "slide"
 	if crouching: pass # return "crouch"
 	if not is_on_floor(): return "jump"

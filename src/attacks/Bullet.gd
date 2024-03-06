@@ -1,3 +1,4 @@
+class_name Bullet
 extends Node3D
 
 var speed = 20.0

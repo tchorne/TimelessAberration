@@ -9,6 +9,8 @@ extends Node3D
 @onready var hurt_box = $HurtBox
 @onready var death = $Death
 
+@export var range_override: float = -1.0
+
 @export var attackType: AttackManager.AttackType = AttackManager.AttackType.GUN
 
 @export var priority: int = -1
@@ -34,6 +36,9 @@ func _ready():
 	killed_event.begun.connect(on_event_begun)
 	if is_instance_valid(event_start_node):
 		killed_event.player_transform = event_start_node.global_transform
+	if range_override > 0:
+		$AttackArea/CollisionShape3D.shape = $AttackArea/CollisionShape3D.shape.duplicate()
+		$AttackArea/CollisionShape3D.shape.radius = range_override
 	
 
 func get_time_event() -> TimeEvent:

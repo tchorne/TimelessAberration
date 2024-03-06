@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://7xxy6hvfr7e"]
+[gd_scene load_steps=11 format=3 uid="uid://7xxy6hvfr7e"]
 
 [ext_resource type="Script" path="res://src/attacks/Bullet.gd" id="1_46p7h"]
 [ext_resource type="Material" uid="uid://dgrhrwhpyh5mp" path="res://src/attacks/bullet_mat.tres" id="2_lk1b0"]
@@ -27,6 +27,8 @@ material = ExtResource("2_lk1b0")
 radius = 0.025
 height = 0.05
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_cpf7i"]
+
 [node name="Bullet" type="Area3D"]
 collision_layer = 8
 collision_mask = 0
@@ -48,3 +50,10 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.114564)
 lifetime = 0.13
 process_material = SubResource("ParticleProcessMaterial_42xy6")
 draw_pass_1 = SubResource("SphereMesh_i3k6c")
+
+[node name="Slicable" type="Area3D" parent="."]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Slicable"]
+shape = SubResource("SphereShape3D_cpf7i")

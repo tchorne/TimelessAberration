@@ -15,16 +15,22 @@ var time_ordered: Array[TimeEvent] = []
 @onready var replay_controller = ReplayController
 @onready var player = get_tree().get_first_node_in_group('player')
 @onready var animation_player = $AnimationPlayer
+@onready var ui = get_tree().get_first_node_in_group("ui")
 
 var event_index = 0
 var time_index = 0
 var frames_since_event_start = 0
 var time_between_events = 0.2
 
+var objective_time: float = 10000.0
+var time_remaining: float = 100.0
+
+
 var current_time = 0 # Most recent call to player_packet.get_realtime_frame()
 var current_event : TimeEvent
 
 @export var objective_mat: ShaderMaterial
+
 
 var objective_object : Node3D
 
@@ -34,6 +40,7 @@ func init():
 	#	event_list.append(e.get_time_event())
 	#for e in enemy_time_ordered:
 	#	time_ordered.append(e.get_time_event())
+	GlobalMusic.toggle_muffle(false)
 	time_ordered.clear()
 	get_tree().get_first_node_in_group("ui").set_cctv(false)
 
@@ -64,16 +71,24 @@ func init():
 	
 	event_index = 0
 	next_event()
-			
+
+func _process(delta):
+	var delta2 = delta*GlobalSettings.game_speed
+	if GlobalSettings.game_active and not player.invincible:
+		time_remaining -= delta2
+	ui.set_time_remaining(time_remaining/objective_time)
+	if time_remaining < 0: LevelManager.restart()
+	
 func next_event():
 	frames_since_event_start = 0
 	var next : TimeEvent = event_list[event_index]
 	current_event = next
 	assert(next.player_transform.origin != Vector3.ZERO)
 	event_index += 1
+	objective_time = next.time
+	time_remaining = next.time
+	
 	player.global_transform = next.player_transform
-	
-	
 	var time_ordered_pos = time_ordered.find(next)
 	time_index = time_ordered_pos + 1
 	
@@ -92,9 +107,10 @@ func next_event():
 	
 
 func end_level():
+	GlobalMusic.toggle_muffle(true)
 	GlobalSettings.game_active = false
 	get_tree().get_first_node_in_group("replay_cam").current = true
-	get_tree().get_first_node_in_group("ui").set_cctv(true)
+	ui.set_cctv(true)
 	player.invincible = true
 	player.invincibility_timer.stop()
 	ReplayController._on_player_level_finished()

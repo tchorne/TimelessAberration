@@ -4,7 +4,7 @@ extends Node
 @export var transform_target : Node3D
 @export var priority = -1
 @export var objective_position_node : Node3D
-
+@export var time = 10.0
 
 signal completed
 signal begun

@@ -1,6 +1,7 @@
 extends Node
 
 const LEVEL_ORDER = [
+	"res://src/stages/stage_3.tscn",
 	"res://src/stages/stage_2.tscn",
 	"res://src/stages/stage.tscn"
 ]

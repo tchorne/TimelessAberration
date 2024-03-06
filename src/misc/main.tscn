@@ -8,3 +8,4 @@
 [node name="world" parent="." instance=ExtResource("1_f37ne")]
 
 [node name="Settings" parent="." instance=ExtResource("2_nn7uy")]
+visible = false

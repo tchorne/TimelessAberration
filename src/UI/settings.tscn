@@ -1,6 +1,23 @@
-[gd_scene load_steps=2 format=3 uid="uid://bsck8sobp1o23"]
+[gd_scene load_steps=5 format=3 uid="uid://bsck8sobp1o23"]
 
 [ext_resource type="Script" path="res://src/UI/SettingsMenu.gd" id="1_d40uh"]
+[ext_resource type="Theme" uid="uid://ch60cxg3nmw6h" path="res://src/UI/menu.tres" id="2_g0qu1"]
+[ext_resource type="Texture2D" uid="uid://bf8y77b5ysb8x" path="res://assets/UI/record.png" id="3_s7vlx"]
+
+[sub_resource type="GDScript" id="GDScript_1gkrh"]
+script/source = "@tool
+extends TextureRect
+
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass # Replace with function body.
+
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	rotation += delta
+"
 
 [node name="Settings" type="Control"]
 process_mode = 3
@@ -20,3 +37,171 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.266667)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 79.0
+offset_top = 103.0
+offset_right = 679.0
+offset_bottom = 143.0
+
+[node name="Master" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(600, 40)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/Master"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme = ExtResource("2_g0qu1")
+theme_override_font_sizes/font_size = 32
+text = "Master "
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/Master"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -454.0
+offset_top = -8.0
+offset_bottom = 8.0
+grow_horizontal = 0
+grow_vertical = 2
+max_value = 200.0
+value = 100.0
+
+[node name="Sound" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(600, 40)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/Sound"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme = ExtResource("2_g0qu1")
+theme_override_font_sizes/font_size = 32
+text = "Sound"
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/Sound"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -454.0
+offset_top = -8.0
+offset_bottom = 8.0
+grow_horizontal = 0
+grow_vertical = 2
+max_value = 200.0
+value = 100.0
+
+[node name="Music" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(600, 40)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/Music"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme = ExtResource("2_g0qu1")
+theme_override_font_sizes/font_size = 32
+text = "Music"
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/Music"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -454.0
+offset_top = -8.0
+offset_bottom = 8.0
+grow_horizontal = 0
+grow_vertical = 2
+max_value = 200.0
+value = 100.0
+
+[node name="Enemy Alerts" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(600, 40)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/Enemy Alerts"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+theme = ExtResource("2_g0qu1")
+theme_override_font_sizes/font_size = 32
+text = "Danger"
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/Enemy Alerts"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -454.0
+offset_top = -8.0
+offset_bottom = 8.0
+grow_horizontal = 0
+grow_vertical = 2
+max_value = 200.0
+value = 100.0
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -52.0
+offset_top = -160.0
+offset_right = 49.0
+offset_bottom = -122.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("2_g0qu1")
+theme_override_font_sizes/font_size = 32
+text = "Resume"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -1073.0
+offset_top = 276.0
+offset_right = -713.0
+offset_bottom = 303.0
+grow_horizontal = 0
+grow_vertical = 2
+theme = ExtResource("2_g0qu1")
+theme_override_font_sizes/font_size = 20
+text = "Vitalezzz - A Flawless Getaway"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -64.0
+offset_right = 64.0
+grow_vertical = 0
+pivot_offset = Vector2(32, 32)
+texture = ExtResource("3_s7vlx")
+expand_mode = 3
+script = SubResource("GDScript_1gkrh")
+
+[connection signal="value_changed" from="VBoxContainer/Master/HSlider" to="." method="_on_master_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/Sound/HSlider" to="." method="_on_sound_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/Music/HSlider" to="." method="_on_music_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/Enemy Alerts/HSlider" to="." method="_on_alert_value_changed"]
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
