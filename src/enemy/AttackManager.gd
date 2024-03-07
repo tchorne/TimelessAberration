@@ -2,6 +2,7 @@ class_name AttackManager
 extends Node
 
 const BULLET = preload("res://src/attacks/bullet.tscn")
+const AOE = preload("res://src/attacks/aoe.tscn")
 
 enum AttackType { GUN, TRIPLEGUN, MACHINEGUN, AOE, SHIELD }
 
@@ -30,6 +31,8 @@ func begin_attack(type: AttackType):
 			animation_player.play("gun")
 		AttackType.TRIPLEGUN:
 			animation_player.play("triplegun")
+		AttackType.AOE:
+			animation_player.play("aoe")
 			
 
 
@@ -59,6 +62,14 @@ func fire_bullet():
 	b.look_at(player_position+player_velocity*0.15)
 	ReplayController.add_callable(fire_replay_bullet.bind(player_position+player_velocity*0.15))	
 	
+func throw_aoe():
+	var b = AOE.instantiate()
+	add_child(b)
+	b.global_position = gun_origin.global_position
+	b.look_at(player_position+player_velocity*0.15)
+	b.velocity = (player_position+player_velocity*0.15 - b.global_position).normalized() * 2.0
+	#ReplayController.add_callable(fire_replay_bullet.bind(player_position+player_velocity*0.15))
+
 func fire_replay_bullet(pos: Vector3):
 	if get_parent().dead: return
 	var b = BULLET.instantiate()

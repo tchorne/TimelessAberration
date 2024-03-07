@@ -1,21 +1,12 @@
-[gd_scene load_steps=11 format=3 uid="uid://daf2kd6yl1d60"]
+[gd_scene load_steps=7 format=3 uid="uid://daf2kd6yl1d60"]
 
 [ext_resource type="Texture2D" uid="uid://dk3t03aarl6hf" path="res://assets/prototype/texture_07.png" id="1_om816"]
 [ext_resource type="PackedScene" uid="uid://6up75s4fmthq" path="res://src/enemy/enemy.tscn" id="2_3225p"]
-[ext_resource type="Texture2D" uid="uid://bdvve80wj6m7" path="res://assets/prototype/texture_01.png" id="2_pxfqt"]
 [ext_resource type="Script" path="res://src/props/Elevator.gd" id="3_ic03i"]
-[ext_resource type="Texture2D" uid="uid://damnyn1hcjehw" path="res://assets/prototype/texture_08.png" id="3_jnofx"]
 [ext_resource type="Script" path="res://src/time/TimeEvent.gd" id="4_nc6w8"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8pjdf"]
 albedo_texture = ExtResource("1_om816")
-uv1_triplanar = true
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ptjfx"]
-albedo_texture = ExtResource("2_pxfqt")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_3jbam"]
-albedo_texture = ExtResource("3_jnofx")
 uv1_triplanar = true
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_2h1b3"]
@@ -27,94 +18,13 @@ size = Vector3(8.35864, 5.67941, 1)
 use_collision = true
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="Room"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.22695, 32.3977, 12.1899)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 24.4282)
 use_collision = true
-size = Vector3(7, 1.28625, 7.71985)
+size = Vector3(7, 1.28625, 56.5762)
 material = SubResource("StandardMaterial3D_8pjdf")
-
-[node name="CSGBox3D4" type="CSGBox3D" parent="Room"]
-transform = Transform3D(0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 0, 1, -4.92276, 26.745, 18.2526)
-use_collision = true
-size = Vector3(7, 1.28625, 26)
-material = SubResource("StandardMaterial3D_8pjdf")
-
-[node name="CSGBox3D9" type="CSGBox3D" parent="Room"]
-transform = Transform3D(-0.965926, -0.258819, -8.74228e-08, -0.258819, 0.965926, 0, 8.44439e-08, 2.26267e-08, -1, 13.987, 26.745, 18.2526)
-use_collision = true
-size = Vector3(7, 1.28625, 26)
-material = SubResource("StandardMaterial3D_8pjdf")
-
-[node name="CSGBox3D5" type="CSGBox3D" parent="Room"]
-transform = Transform3D(0.349374, 0, -0.936984, 0, 1, 0, 0.936984, 0, 0.349374, 23.1577, 21.2428, 26.1614)
-use_collision = true
-size = Vector3(3.80908, 0.731992, 26)
-material = SubResource("StandardMaterial3D_8pjdf")
-
-[node name="CSGBox3D7" type="CSGBox3D" parent="Room"]
-transform = Transform3D(0.998383, 0, -0.05685, 0, 1, 0, 0.05685, 0, 0.998383, 3.93083, 21.2999, 34.6365)
-material_override = SubResource("StandardMaterial3D_ptjfx")
-use_collision = true
-size = Vector3(7, 1.28625, 5.18811)
-material = SubResource("StandardMaterial3D_3jbam")
-
-[node name="CSGBox3D8" type="CSGBox3D" parent="Room"]
-transform = Transform3D(0.997034, 0, 0.0769623, 0, 1, 0, -0.0769623, 0, 0.997034, -19.6883, 30.8878, 24.8712)
-use_collision = true
-size = Vector3(7, 1.28625, 2.86865)
-material = SubResource("StandardMaterial3D_8pjdf")
-
-[node name="CSGBox3D6" type="CSGBox3D" parent="Room"]
-transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 4.95522, 21.6418, 44.6882)
-use_collision = true
-size = Vector3(2.32944, 0.417053, 1.974)
-material = SubResource("StandardMaterial3D_8pjdf")
-
-[node name="CSGBox3D10" type="CSGBox3D" parent="Room"]
-transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -2.68459, 16.3686, 48.1252)
-use_collision = true
-size = Vector3(6.49847, 0.417053, 6.40527)
-material = SubResource("StandardMaterial3D_8pjdf")
-
-[node name="CSGBox3D11" type="CSGBox3D" parent="Room"]
-transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, 7.23597, 12.2213, 59.198)
-use_collision = true
-size = Vector3(6.49847, 0.417053, 6.40527)
-material = SubResource("StandardMaterial3D_3jbam")
-
-[node name="Enemy" parent="." node_paths=PackedStringArray("event_start_node") instance=ExtResource("2_3225p")]
-transform = Transform3D(-0.707107, 0, 0.707107, 0, 1, 0, -0.707107, 0, -0.707107, -4.43857, 27.1519, 28.6891)
-range_override = 10.0
-attackType = 1
-priority = 2
-event_start_node = NodePath("start")
-
-[node name="start" type="Marker3D" parent="Enemy"]
-transform = Transform3D(0.713911, 0, 0.700237, 0, 1, 0, -0.700237, 0, 0.713911, 15.0663, 0, 15.0663)
-
-[node name="Enemy2" parent="." node_paths=PackedStringArray("event_start_node") instance=ExtResource("2_3225p")]
-transform = Transform3D(-0.5, 0, -0.866025, 0, 1, 0, 0.866025, 0, -0.5, 13.582, 27.2518, 30.1085)
-attackType = 1
-priority = 1
-event_start_node = NodePath("start")
-
-[node name="start" type="Marker3D" parent="Enemy2"]
-transform = Transform3D(0.552112, 0, -0.833771, 0, 1, 0, 0.833771, 0, 0.552112, -20.2168, 0, 11.6039)
-
-[node name="Enemy3" parent="." node_paths=PackedStringArray("event_start_node") instance=ExtResource("2_3225p")]
-transform = Transform3D(-0.999434, 4.2222e-08, 0.0336436, 4.11082e-08, 1, -3.38002e-08, -0.0336436, -3.2398e-08, -0.999434, -2.47398, 16.8106, 48.6583)
-priority = 3
-event_start_node = NodePath("start")
-
-[node name="start" type="Marker3D" parent="Enemy3"]
-transform = Transform3D(0.353377, -1.55431e-15, -0.935481, -7.10543e-15, 1, 1.06581e-14, 0.935481, 0, 0.353377, -34.8887, 6.03276, 27.1427)
-
-[node name="Enemy4" parent="." node_paths=PackedStringArray("event_start_node") instance=ExtResource("2_3225p")]
-transform = Transform3D(-0.914473, 4.91685e-08, -0.404646, 3.67221e-08, 1, 3.85202e-08, 0.404646, 2.03663e-08, -0.914473, 4.96121, 21.8812, 44.7895)
-priority = 0
-event_start_node = NodePath("../StartPos")
 
 [node name="Elevator" type="Area3D" parent="."]
-transform = Transform3D(0.734275, 0, 0.678852, 0, 1, 0, -0.678852, 0, 0.734275, 9.68478, 13.3146, 60.3176)
+transform = Transform3D(0.997724, 0, 0.0674233, 0, 1, 0, -0.0674233, 0, 0.997724, 1.30964, 1.31241, 47.202)
 collision_layer = 0
 collision_mask = 4
 script = ExtResource("3_ic03i")
@@ -128,7 +38,7 @@ script = ExtResource("4_nc6w8")
 transform_target = NodePath("Node3D")
 
 [node name="Node3D" type="Node3D" parent="Elevator/InElevator"]
-transform = Transform3D(-0.0283403, 0, -0.999598, 0, 1, 0, 0.999598, 0, -0.0283403, -21.2293, 31.8135, 23.8277)
+transform = Transform3D(-0.0283403, 0, -0.999598, 0, 1, 0, 0.999598, 0, -0.0283403, -6.98084, 31.8135, 24.2317)
 
 [node name="ReplayCam" type="Camera3D" parent="." groups=["replay_cam"]]
 unique_name_in_owner = true
@@ -136,6 +46,11 @@ transform = Transform3D(0.715254, -0.342214, 0.609345, -1.49012e-08, 0.871907, 0
 fov = 62.1775
 
 [node name="StartPos" type="Marker3D" parent="."]
-transform = Transform3D(-0.965926, 0, 0.258819, 0, 1, 0, -0.258819, 0, -0.965926, 4.16849, 34.5319, 13.2353)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.063509, 4.18841, 0.482265)
+
+[node name="Enemy" parent="." node_paths=PackedStringArray("event_start_node") instance=ExtResource("2_3225p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.802769, 15.0047)
+attackType = 3
+event_start_node = NodePath("../StartPos")
 
 [connection signal="body_entered" from="Elevator" to="Elevator" method="_on_body_entered"]

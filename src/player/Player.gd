@@ -14,6 +14,7 @@ signal replayable_action_performed(Callable)
 @onready var interact = $Neck/Head/Eyes/Camera3D/Interact
 @onready var kill_animation_player = $KillAnimation/KillAnimationPlayer
 @onready var bullet_slicer = $Neck/Head/Eyes/Camera3D/BulletSlicer
+@onready var aoe_hurtbox = %AOEHurtbox
 
 # Sword nodes
 
@@ -34,6 +35,7 @@ signal replayable_action_performed(Callable)
 @onready var sound_bullet_hit = %SoundBulletHit
 @onready var sound_slide = %SoundSlide
 @onready var sound_jump = %SoundJump
+
 
 var my_velocity := Vector3.ZERO
 
@@ -102,6 +104,8 @@ var mouse_sens = 0.3
 var highlighted_enemy: Enemy
 var time_since_jump = 0.0
 
+var time_in_aoe := 0.0
+
 var enemy_being_killed : Node
 @export var distance_to_enemy : float = 0
 var position_before_attack: Vector3
@@ -153,10 +157,7 @@ func ingame_process(delta):
 			sound_bullet_hit.play()
 		else:
 			%SoundWhoosh.play()
-			
-
-			
-			
+				
 	if (position_before_attack != null and is_instance_valid(enemy_being_killed) and distance_to_enemy > 0):
 		global_position = position_before_attack.lerp(enemy_being_killed.global_position, distance_to_enemy)
 		
@@ -169,6 +170,17 @@ func ingame_process(delta):
 		if is_instance_valid(highlighted_enemy):
 			highlighted_enemy = null
 			GlobalEventBus.select_enemy(null)
+	
+	var in_aoe := false
+	for area in aoe_hurtbox.get_overlapping_areas():
+		if area.is_in_group("aoe") and not area.falling:
+			in_aoe = true
+	if in_aoe:
+		time_in_aoe += delta
+		if time_in_aoe > 0.18: die()
+		print(time_in_aoe)
+	else:
+		time_in_aoe = 0.0
 	
 	velocity = my_velocity * GlobalSettings.game_speed
 	move_and_slide()
@@ -343,9 +355,12 @@ func kill_and_teleport():
 	
 	
 func _on_bullet_hurt_box_area_entered(area):
-	if !invincible:
-		sound_death.play()
-		LevelManager.restart()
+	if !invincible and area.is_in_group("bullets"):
+		die()
+
+func die():
+	sound_death.play()
+	LevelManager.restart()
 
 func _on_invincibility_timer_timeout():
 	invincible = false

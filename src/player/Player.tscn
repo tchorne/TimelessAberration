@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://hmsvj6744cwb"]
+[gd_scene load_steps=30 format=3 uid="uid://hmsvj6744cwb"]
 
 [ext_resource type="Script" path="res://src/player/Player.gd" id="1_a4v6e"]
 [ext_resource type="AudioStream" uid="uid://cx02ubmnhcd3m" path="res://assets/sounds/Custom/death.wav" id="2_c4g3h"]
@@ -309,6 +309,10 @@ _data = {
 "kill": SubResource("Animation_qpf16")
 }
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_bdp71"]
+height = 0.0959873
+radius = 0.242627
+
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 collision_layer = 4
 collision_mask = 9
@@ -461,6 +465,15 @@ libraries = {
 
 [node name="InvincibilityTimer" type="Timer" parent="."]
 one_shot = true
+
+[node name="AOEHurtbox" type="Area3D" parent="."]
+unique_name_in_owner = true
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="AOEHurtbox"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0912689, 0)
+shape = SubResource("CylinderShape3D_bdp71")
 
 [connection signal="area_entered" from="Neck/Head/Eyes/Camera3D/BulletHurtBox" to="." method="_on_bullet_hurt_box_area_entered"]
 [connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]

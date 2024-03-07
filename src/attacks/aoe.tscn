@@ -1,0 +1,57 @@
+[gd_scene load_steps=9 format=3 uid="uid://p4caqga4lsh5"]
+
+[ext_resource type="Script" path="res://src/attacks/aoe.gd" id="1_lswbe"]
+[ext_resource type="Shader" path="res://src/shaders/unlit.gdshader" id="1_t60np"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hg5h0"]
+transparency = 1
+albedo_color = Color(1, 0.439216, 0.141176, 0.486275)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_4h4qx"]
+material = SubResource("StandardMaterial3D_hg5h0")
+top_radius = 2.0
+bottom_radius = 2.0
+height = 0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8wf5o"]
+render_priority = 0
+shader = ExtResource("1_t60np")
+shader_parameter/color = Color(1, 0.337255, 0, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_kig21"]
+material = SubResource("ShaderMaterial_8wf5o")
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.4
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_w7c7u"]
+radius = 0.231259
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_851kk"]
+height = 0.343964
+radius = 1.90043
+
+[node name="Aoe" type="Area3D" groups=["aoe"]]
+collision_layer = 8
+collision_mask = 0
+monitoring = false
+script = ExtResource("1_lswbe")
+
+[node name="fire" type="MeshInstance3D" parent="."]
+visible = false
+mesh = SubResource("CylinderMesh_4h4qx")
+
+[node name="bottle" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_kig21")
+
+[node name="Area3D2" type="Area3D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D2"]
+shape = SubResource("SphereShape3D_w7c7u")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0120517, 0)
+shape = SubResource("CylinderShape3D_851kk")
+
+[connection signal="body_entered" from="Area3D2" to="." method="_on_area_3d_2_body_entered"]
